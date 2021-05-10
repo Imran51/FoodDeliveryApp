@@ -29,13 +29,19 @@
 		715C188E2649483600026221 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 715C18822649483600026221 /* Roboto-Black.ttf */; };
 		715C1892264985AF00026221 /* UISegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C1891264985AF00026221 /* UISegmentControl.swift */; };
 		715C1894264986F300026221 /* FoodTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C1893264986F300026221 /* FoodTypes.swift */; };
+		715C18962649A33200026221 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C18952649A33200026221 /* CardView.swift */; };
+		715C18A02649A54300026221 /* FoodItemViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C189F2649A54300026221 /* FoodItemViewPresenter.swift */; };
+		715C18A22649A55D00026221 /* FoodItemViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C18A12649A55D00026221 /* FoodItemViewInteractor.swift */; };
+		715C18A42649A57600026221 /* FoodItemViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C18A32649A57600026221 /* FoodItemViewRouter.swift */; };
+		715C18A62649A59500026221 /* FoodItemViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C18A52649A59500026221 /* FoodItemViewProtocol.swift */; };
+		715C18A82649CB9900026221 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C18A72649CB9900026221 /* CustomImageView.swift */; };
+		715C18AA2649CD6C00026221 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715C18A92649CD6C00026221 /* UIImageView.swift */; };
 		7170466A2647A8C600656CE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046692647A8C600656CE4 /* AppDelegate.swift */; };
 		7170466C2647A8C600656CE4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170466B2647A8C600656CE4 /* SceneDelegate.swift */; };
 		7170466E2647A8C600656CE4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170466D2647A8C600656CE4 /* HomeViewController.swift */; };
 		717046732647A8C700656CE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 717046722647A8C700656CE4 /* Assets.xcassets */; };
 		717046762647A8C700656CE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 717046742647A8C700656CE4 /* LaunchScreen.storyboard */; };
 		717046832647DC9600656CE4 /* FoodItemContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046822647DC9600656CE4 /* FoodItemContainerViewController.swift */; };
-		717046852647DCBE00656CE4 /* DrinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046842647DCBE00656CE4 /* DrinksViewController.swift */; };
 		717046872647EDC500656CE4 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046862647EDC500656CE4 /* NetworkService.swift */; };
 		717046892647EFFC00656CE4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046882647EFFC00656CE4 /* NetworkManager.swift */; };
 		7170468C2647F08500656CE4 /* DiscountImageResourceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170468B2647F08500656CE4 /* DiscountImageResourceResponse.swift */; };
@@ -46,7 +52,6 @@
 		7170469C2648000500656CE4 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170469B2648000500656CE4 /* HomeViewPresenter.swift */; };
 		7170469E2648012E00656CE4 /* HomeViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170469D2648012E00656CE4 /* HomeViewInteractor.swift */; };
 		717046A026481A1100656CE4 /* HomeViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170469F26481A1100656CE4 /* HomeViewRouter.swift */; };
-		717046A42648377700656CE4 /* SildingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046A32648377700656CE4 /* SildingCollectionViewCell.swift */; };
 		717046A62648804700656CE4 /* FoodItemContainerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046A52648804700656CE4 /* FoodItemContainerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +77,13 @@
 		715C18822649483600026221 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		715C1891264985AF00026221 /* UISegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControl.swift; sourceTree = "<group>"; };
 		715C1893264986F300026221 /* FoodTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTypes.swift; sourceTree = "<group>"; };
+		715C18952649A33200026221 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		715C189F2649A54300026221 /* FoodItemViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemViewPresenter.swift; sourceTree = "<group>"; };
+		715C18A12649A55D00026221 /* FoodItemViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemViewInteractor.swift; sourceTree = "<group>"; };
+		715C18A32649A57600026221 /* FoodItemViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemViewRouter.swift; sourceTree = "<group>"; };
+		715C18A52649A59500026221 /* FoodItemViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemViewProtocol.swift; sourceTree = "<group>"; };
+		715C18A72649CB9900026221 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		715C18A92649CD6C00026221 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		717046662647A8C600656CE4 /* FoodDeliveryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodDeliveryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		717046692647A8C600656CE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7170466B2647A8C600656CE4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,7 +92,6 @@
 		717046752647A8C700656CE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		717046772647A8C700656CE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		717046822647DC9600656CE4 /* FoodItemContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemContainerViewController.swift; sourceTree = "<group>"; };
-		717046842647DCBE00656CE4 /* DrinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksViewController.swift; sourceTree = "<group>"; };
 		717046862647EDC500656CE4 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		717046882647EFFC00656CE4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7170468B2647F08500656CE4 /* DiscountImageResourceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountImageResourceResponse.swift; sourceTree = "<group>"; };
@@ -91,7 +102,6 @@
 		7170469B2648000500656CE4 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		7170469D2648012E00656CE4 /* HomeViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewInteractor.swift; sourceTree = "<group>"; };
 		7170469F26481A1100656CE4 /* HomeViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewRouter.swift; sourceTree = "<group>"; };
-		717046A32648377700656CE4 /* SildingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SildingCollectionViewCell.swift; sourceTree = "<group>"; };
 		717046A52648804700656CE4 /* FoodItemContainerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemContainerTableViewCell.swift; sourceTree = "<group>"; };
 		DA7EBCF3E3C39093790A920D /* Pods-FoodDeliveryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.release.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.release.xcconfig"; sourceTree = "<group>"; };
 		DD982188638001781E823B45 /* Pods-FoodDeliveryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.debug.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +142,8 @@
 			children = (
 				715C18372648F08700026221 /* ComponentView.swift */,
 				715C1857264940A600026221 /* CustomLoadingIndicatorView.swift */,
+				715C18952649A33200026221 /* CardView.swift */,
+				715C18A72649CB9900026221 /* CustomImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -142,6 +154,7 @@
 				715C18332648EF6000026221 /* UIColor.swift */,
 				715C18392648F17800026221 /* UIView.swift */,
 				715C1891264985AF00026221 /* UISegmentControl.swift */,
+				715C18A92649CD6C00026221 /* UIImageView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -163,6 +176,76 @@
 				715C18822649483600026221 /* Roboto-Black.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		715C18972649A43400026221 /* FoodItemsContainer */ = {
+			isa = PBXGroup;
+			children = (
+				715C189C2649A48800026221 /* Protocol */,
+				715C189D2649A4BC00026221 /* Enum */,
+				715C18982649A46700026221 /* Router */,
+				715C189A2649A47500026221 /* Presenter */,
+				715C189B2649A47E00026221 /* Interactor */,
+				715C18992649A46E00026221 /* View */,
+			);
+			path = FoodItemsContainer;
+			sourceTree = "<group>";
+		};
+		715C18982649A46700026221 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				715C18A32649A57600026221 /* FoodItemViewRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		715C18992649A46E00026221 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				715C189E2649A4E400026221 /* cell */,
+				717046822647DC9600656CE4 /* FoodItemContainerViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		715C189A2649A47500026221 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				715C189F2649A54300026221 /* FoodItemViewPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		715C189B2649A47E00026221 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				715C18A12649A55D00026221 /* FoodItemViewInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		715C189C2649A48800026221 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				715C18A52649A59500026221 /* FoodItemViewProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		715C189D2649A4BC00026221 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				715C1893264986F300026221 /* FoodTypes.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		715C189E2649A4E400026221 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				717046A52648804700656CE4 /* FoodItemContainerTableViewCell.swift */,
+			);
+			path = cell;
 			sourceTree = "<group>";
 		};
 		7170465D2647A8C600656CE4 = {
@@ -215,6 +298,7 @@
 		7170467E2647A9BE00656CE4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				715C18972649A43400026221 /* FoodItemsContainer */,
 				717046812647B7BF00656CE4 /* Home */,
 			);
 			path = UI;
@@ -247,7 +331,6 @@
 				717046962647F91B00656CE4 /* Interactor */,
 				717046952647F8FA00656CE4 /* Presenter */,
 				717046A12648372500656CE4 /* View */,
-				717046842647DCBE00656CE4 /* DrinksViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -297,7 +380,6 @@
 		717046982647F94600656CE4 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				715C1893264986F300026221 /* FoodTypes.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -305,20 +387,9 @@
 		717046A12648372500656CE4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				717046A22648373D00656CE4 /* cell */,
 				7170466D2647A8C600656CE4 /* HomeViewController.swift */,
-				717046822647DC9600656CE4 /* FoodItemContainerViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		717046A22648373D00656CE4 /* cell */ = {
-			isa = PBXGroup;
-			children = (
-				717046A32648377700656CE4 /* SildingCollectionViewCell.swift */,
-				717046A52648804700656CE4 /* FoodItemContainerTableViewCell.swift */,
-			);
-			path = cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,24 +518,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				7170466E2647A8C600656CE4 /* HomeViewController.swift in Sources */,
+				715C18962649A33200026221 /* CardView.swift in Sources */,
 				7170468C2647F08500656CE4 /* DiscountImageResourceResponse.swift in Sources */,
 				715C18312648EF1500026221 /* BaseColor.swift in Sources */,
+				715C18A22649A55D00026221 /* FoodItemViewInteractor.swift in Sources */,
 				715C1892264985AF00026221 /* UISegmentControl.swift in Sources */,
 				7170466A2647A8C600656CE4 /* AppDelegate.swift in Sources */,
-				717046852647DCBE00656CE4 /* DrinksViewController.swift in Sources */,
 				7170469A2647F96100656CE4 /* HomeProtocol.swift in Sources */,
 				715C18342648EF6000026221 /* UIColor.swift in Sources */,
 				715C1858264940A600026221 /* CustomLoadingIndicatorView.swift in Sources */,
 				717046A026481A1100656CE4 /* HomeViewRouter.swift in Sources */,
 				715C1894264986F300026221 /* FoodTypes.swift in Sources */,
+				715C18A02649A54300026221 /* FoodItemViewPresenter.swift in Sources */,
 				717046892647EFFC00656CE4 /* NetworkManager.swift in Sources */,
+				715C18AA2649CD6C00026221 /* UIImageView.swift in Sources */,
 				717046912647F38100656CE4 /* APIErrorType.swift in Sources */,
 				717046A62648804700656CE4 /* FoodItemContainerTableViewCell.swift in Sources */,
 				7170468F2647F15D00656CE4 /* BaseResponseObject.swift in Sources */,
 				717046932647F3AA00656CE4 /* Reachability.swift in Sources */,
 				7170466C2647A8C600656CE4 /* SceneDelegate.swift in Sources */,
-				717046A42648377700656CE4 /* SildingCollectionViewCell.swift in Sources */,
+				715C18A82649CB9900026221 /* CustomImageView.swift in Sources */,
 				715C18362648F03200026221 /* BaseFonts.swift in Sources */,
+				715C18A42649A57600026221 /* FoodItemViewRouter.swift in Sources */,
+				715C18A62649A59500026221 /* FoodItemViewProtocol.swift in Sources */,
 				7170469E2648012E00656CE4 /* HomeViewInteractor.swift in Sources */,
 				7170469C2648000500656CE4 /* HomeViewPresenter.swift in Sources */,
 				715C183A2648F17800026221 /* UIView.swift in Sources */,

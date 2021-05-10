@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FloatingPanel
 
 typealias EntryPoint = PresenterToHomeView & UIViewController
 
@@ -26,6 +27,8 @@ protocol PresenterToRouter {
     var entry: EntryPoint? { get }
     
     static func start()  -> PresenterToRouter
+    
+    func showFloatingPanelView(from viewController: UIViewController, withFloatingPanel fpc: FloatingPanelController, withFoodItemsData foodItems: FoodItemsResponse?)
 }
 
 protocol HomeViewToPresenter {
@@ -36,6 +39,8 @@ protocol HomeViewToPresenter {
     var view: PresenterToHomeView? { get set }
     
     func fetchData()
+    
+    func showFloatingPanelView(from viewController: UIViewController, withFloatingPanel fpc: FloatingPanelController, withFoodItemsData foodItems: FoodItemsResponse?)
 }
 
 
@@ -56,27 +61,3 @@ protocol InteractorToPresenter {
     func isLoading(isLoading: Bool)
 }
 
-//protocol ViewToPresenterProtocol: class {
-//    var view: PresenterToViewProtocol? {get set}
-//    var interactor: PresenterToInteractorProtocol? {get set}
-//    var router: PresenterToRouterProtocol? {get set}
-//    func fetchingHome()
-//    
-//}
-//
-//protocol PresenterToViewProtocol: class{
-//    func showDiscountImageResouceName(data: [DiscountImageResourceResponse]?)
-//    func showError(error: String)
-//}
-//
-//protocol PresenterToRouterProtocol: class {
-//    static func createModule()-> ViewController
-////    func showMovieController(navigationController:UINavigationController, menuEnum: HomeEnumSection)
-////    func showMovieController(navigationController:UINavigationController, genres: MovieGenresModel?)
-////    func showDetailMovieController(navigationController: UINavigationController, movie: UpcomingMoviesModel?)
-//}
-//
-//protocol PresenterToInteractorProtocol: class {
-//    //var presenter:InteractorToPresenterProtocol? {get set}
-//    func fetchingHome()
-//}

@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import TTGSnackbar
 
 class FoodItemContainerViewController: UIViewController {
+    var presenter: FoodItemViewToPresenter?
+    
     private var foodItems = [FoodItem]()
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -15,8 +18,6 @@ class FoodItemContainerViewController: UIViewController {
         
         return table
     }()
-    
-    private let segmentItems: [FoodTypes] = [.Pizza,.Sushi,.Drinks]
     
     private let segmentControll: UISegmentedControl = {
         let segment = UISegmentedControl(items: [FoodTypes.Pizza.rawValue, FoodTypes.Sushi.rawValue, FoodTypes.Drinks.rawValue])
@@ -27,15 +28,9 @@ class FoodItemContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
-        view.backgroundColor = .white
         
-        tableView.backgroundColor = nil
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView()
-        tableView.keyboardDismissMode = .interactive
+        view.backgroundColor = .white
+        configureTablviewInitialization()
         configureSegmentControlItems()
     }
     
@@ -51,7 +46,56 @@ class FoodItemContainerViewController: UIViewController {
         
         tableView.frame = CGRect(x: 0, y: 50, width: view.bounds.width, height: view.bounds.height)
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 50, right: 0)
-        //tableView.contentInsetAdjustmentBehavior = .automatic
+    }
+    
+    @objc func segmentedValueChanged(_ sender: UISegmentedControl){
+        switch sender.selectedSegmentIndex {
+        case 1:
+            presenter?.fetchFoodItemsData(for: .Sushi)
+            break
+        case 2:
+            presenter?.fetchFoodItemsData(for: .Drinks)
+            
+        default:
+            presenter?.fetchFoodItemsData(for: .Pizza)
+        }
+    }
+}
+
+// MARK:- Data showing delegate method implementation
+
+extension FoodItemContainerViewController: PresenterToFoodItemView {
+    func updateSegmenteViewAndTableView(with filteredFoodItems: [FoodItem]) {
+        DispatchQueue.main.async {[weak self] in
+            self?.foodItems = filteredFoodItems
+            self?.tableView.reloadData()
+        }
+    }
+    
+    func update(with error: String) {
+        DispatchQueue.main.async {
+            addComponent.showErrorSnackBar(with: error)
+        }
+    }
+    
+    func isLoading(isLoading: Bool) {
+        DispatchQueue.main.async {
+            isLoading ? CustomLoadingIndicatorView.sharedInstance.showBlurView(withTitle: "Please Wait...") : CustomLoadingIndicatorView.sharedInstance.hide()
+        }
+    }
+}
+
+// MARK:- View builder configuration related method implementation
+
+extension FoodItemContainerViewController {
+    private func configureTablviewInitialization(){
+        view.addSubview(tableView)
+        tableView.backgroundColor = nil
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
     }
     
     private func configureSegmentControlItems() {
@@ -66,6 +110,7 @@ class FoodItemContainerViewController: UIViewController {
         segmentControll.removeBorders()
         segmentControll.isHighlighted = false
         
+        segmentControll.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
         segmentControll.snp.makeConstraints{
             make in
             make.leading.equalToSuperview()
@@ -80,10 +125,8 @@ class FoodItemContainerViewController: UIViewController {
 
 extension FoodItemContainerViewController {
     func updateView(with data: [FoodItem]) {
-        DispatchQueue.main.async {[weak self] in
-            self?.foodItems = data
-            self?.tableView.reloadData()
-        }
+        foodItems = data
+        presenter?.fetchFoodItemsData(for: .Pizza, withOriginalFoodItems: data)
     }
 }
 

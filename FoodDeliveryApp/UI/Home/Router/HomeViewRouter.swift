@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FloatingPanel
 
 class HomeViewRouter: PresenterToRouter {
+    
     var entry: EntryPoint?
     
     static func start() -> PresenterToRouter {
@@ -29,5 +31,11 @@ class HomeViewRouter: PresenterToRouter {
         router.entry = view as? EntryPoint
         
         return router
+    }
+    
+    func showFloatingPanelView(from viewController: UIViewController, withFloatingPanel fpc: FloatingPanelController, withFoodItemsData foodItems: FoodItemsResponse?) {
+        let foodItemsViewRouter = FoodItemViewRouter()
+        guard let items = foodItems?.items else { return }
+        foodItemsViewRouter.showFoodItemViewFloatingPanel(from: viewController, withfloatingPanelView: fpc, with: items)
     }
 }

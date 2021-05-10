@@ -9,36 +9,6 @@ import UIKit
 import SDWebImage
 import SnapKit
 
-class CardView: UIView {
-    
-    var defaultCornerRadiusValue: CGFloat = 15.0
-    
-    var cornerRadius: CGFloat {
-        get {
-            return self.defaultCornerRadiusValue
-        }
-        set {
-            self.defaultCornerRadiusValue = newValue
-        }
-    }
-    
-    var shadowOfSetWidth: CGFloat = 1
-    var shadowOfSetHeight: CGFloat = 2
-
-    var shadowColour: UIColor = .darkGray
-    var shadowOpacity: CGFloat = 0.4
-
-    override func layoutSubviews() {
-        layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColour.cgColor
-        layer.shadowOffset = CGSize(width: shadowOfSetWidth, height: shadowOfSetHeight)
-        
-        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-        layer.shadowPath = shadowPath.cgPath
-        layer.shadowOpacity = Float(shadowOpacity)
-    }
-}
-
 class FoodItemContainerTableViewCell: UITableViewCell {
     static let identifier = "FoodItemContainerTableViewCell"
     
@@ -143,17 +113,25 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(parentStackview)
+        
         parentStackview.addArrangedSubview(containerView)
         parentStackview.addArrangedSubview(emptyStackview)
+        
         containerView.addSubview(containerStackView)
+        
         containerStackView.addArrangedSubview(titleImageView)
+        
         subContainerStackView.addArrangedSubview(titleTypeLabel)
         subContainerStackView.addArrangedSubview(descriptionLabel)
+        
         subHorizontalStackView.addArrangedSubview(bottomInfoLabel)
         subHorizontalStackView.addArrangedSubview(rightSidePriceButton)
+        
         subContainerStackView.addArrangedSubview(subHorizontalStackView)
+        
         containerStackView.addArrangedSubview(subContainerStackView)
         containerStackView.addArrangedSubview(emptyFixedheightStackview)
+        
         setUpConstaints()
     }
     
@@ -190,8 +168,6 @@ class FoodItemContainerTableViewCell: UITableViewCell {
             make in
             make.height.equalTo(200)
         }
-        
-        
         
         rightSidePriceButton.snp.makeConstraints{
             make in
@@ -231,23 +207,5 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         descriptionLabel.text = data.description
         bottomInfoLabel.text = data.size
         rightSidePriceButton.setTitle(data.price, for: .normal)
-    }
-}
-
-extension UIImageView {
-    public func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
-        let maskPath = UIBezierPath(roundedRect: bounds,
-                                    byRoundingCorners: corners,
-                                    cornerRadii: CGSize(width: radius, height: radius))
-        let shape = CAShapeLayer()
-        shape.path = maskPath.cgPath
-        layer.mask = shape
-    }
-}
-
-class CustomImageView: UIImageView {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.roundCorners([.topLeft, .topRight], radius: 10)
     }
 }

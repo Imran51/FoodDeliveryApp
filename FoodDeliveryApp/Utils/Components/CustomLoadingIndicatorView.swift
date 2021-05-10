@@ -107,7 +107,7 @@ class CustomLoadingIndicatorView {
         
         container.backgroundColor = UIColor.clear
         
-        subContainer.backgroundColor = UIColor.systemGroupedBackground
+        subContainer.backgroundColor = UIColor.darkGray
         subContainer.center = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
         container.addSubview(subContainer)
         
@@ -136,7 +136,7 @@ class CustomLoadingIndicatorView {
         
         container.backgroundColor = UIColor.black.withAlphaComponent(0.85)
         
-        subContainer.backgroundColor = UIColor.systemGroupedBackground
+        subContainer.backgroundColor = UIColor.darkGray
         subContainer.center = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
         container.addSubview(subContainer)
         

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FloatingPanel
 
 class HomeViewPresenter: HomeViewToPresenter {
+    
     var router: PresenterToRouter?
     
     var interactor: PresenterToInteractor?
@@ -16,6 +18,10 @@ class HomeViewPresenter: HomeViewToPresenter {
     
     func fetchData() {
         interactor?.fetchData()
+    }
+    
+    func showFloatingPanelView(from viewController: UIViewController, withFloatingPanel fpc: FloatingPanelController, withFoodItemsData foodItems: FoodItemsResponse?) {
+        router?.showFloatingPanelView(from: viewController, withFloatingPanel: fpc, withFoodItemsData: foodItems)
     }
 }
 

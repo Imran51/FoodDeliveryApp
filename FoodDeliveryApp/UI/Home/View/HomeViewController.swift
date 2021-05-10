@@ -18,15 +18,6 @@ class HomeViewController: UIViewController {
     private var timer: Timer?
     private var fpc = FloatingPanelController()
     
-    let snackbar = TTGSnackbar(
-        message: " ",
-        duration: .middle,
-        actionText: "Close",
-        actionBlock: { (snackbar) in
-            snackbar.dismiss()
-        }
-    )
-    
     private let pageControl: UIPageControl = UIPageControl()
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -50,7 +41,6 @@ class HomeViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.delegate = self
         
-        configureFloatingPanelView()
         fetchAllData()
     }
     
@@ -109,31 +99,6 @@ extension HomeViewController {
         scrollView.contentSize = CGSize(width:self.scrollView.frame.size.width * CGFloat((imageResourceNames.count)),height: self.scrollView.frame.size.height)
     }
     
-    private func configureFloatingPanelView() {
-        fpc.view.isHidden = true
-        fpc.set(contentViewController: foodItemViewController)
-        
-        fpc.delegate = self
-        fpc.addPanel(toParent: self)
-        fpc.contentMode = .fitToBounds
-        
-        let appearance = SurfaceAppearance()
-
-        // Define shadows
-        let shadow = SurfaceAppearance.Shadow()
-        shadow.color = .gray
-        shadow.offset = CGSize(width: 0, height: 16)
-        shadow.radius = 16
-        shadow.spread = 8
-        appearance.shadows = [shadow]
-
-        // Define corner radius and background color
-        appearance.cornerRadius = 20
-        appearance.backgroundColor = .white
-        // Set the new appearance
-        fpc.surfaceView.appearance = appearance
-    }
-    
     private func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
         self.pageControl.numberOfPages = imageResourceNames.count
@@ -149,13 +114,12 @@ extension HomeViewController {
 
 extension HomeViewController: PresenterToHomeView {
     func update(with discountImageName: DiscountImageResourceResponse?) {
-        timer?.invalidate()
         DispatchQueue.main.async {[weak self] in
             guard let imageNames = discountImageName?.img else { return }
             self?.imageResourceNames = imageNames
             self?.configureUIScorllViewWithImageView(false)
             self?.configurePageControl()
-            self?.fpc.view.isHidden = false
+            
             //self?.scheduledTimerWithTimeInterval()
         }
     }
@@ -163,16 +127,13 @@ extension HomeViewController: PresenterToHomeView {
     func update(with foodItems: FoodItemsResponse?){
         guard let items = foodItems?.items else { return }
         foodItemViewController.updateView(with: items)
+        presenter?.showFloatingPanelView(from: self, withFloatingPanel: fpc, withFoodItemsData: foodItems)
     }
     
     func update(with error: String) {
         DispatchQueue.main.async {
-            self.snackbar.message = error
-            self.snackbar.messageTextColor = BaseColor.red.color
-            self.snackbar.backgroundColor = BaseColor.white.color
-            self.snackbar.show()
+            addComponent.showErrorSnackBar(with: error)
         }
-        
     }
     
     func isLoading(isLoading: Bool) {
