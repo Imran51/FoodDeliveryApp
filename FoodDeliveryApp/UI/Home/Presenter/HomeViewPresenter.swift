@@ -7,17 +7,19 @@
 
 import Foundation
 
-class HomeViewPresenter: Presenter {
-    var router: ViewRouter?
+class HomeViewPresenter: HomeViewToPresenter {
+    var router: PresenterToRouter?
     
-    var interactor: Interactor?{
-        didSet{
-            interactor?.getDiscountImageResouce()
-        }
+    var interactor: PresenterToInteractor?
+    
+    var view: PresenterToHomeView?
+    
+    func fetchData() {
+        interactor?.fetchData()
     }
-    
-    var view: HomeView?
-    
+}
+
+extension HomeViewPresenter: InteractorToPresenter {
     func interactorDidFailFetch(with error: String) {
         view?.update(with: error)
     }

@@ -8,22 +8,24 @@
 import UIKit
 import SnapKit
 import FloatingPanel
-
+import TTGSnackbar
 
 class HomeViewController: UIViewController {
     
-    var presenter: Presenter?
+    var presenter: HomeViewToPresenter?
     var imageResourceNames = [String]()
     
     private var timer: Timer?
     private var fpc = FloatingPanelController()
     
-    let snackbar = Snackbar(message: "",
-                               duration: .middle,
-                               actionText: "Close",
-                               actionBlock: { (snackbar) in
-                                snackbar.dismiss()
-    })
+    let snackbar = TTGSnackbar(
+        message: " ",
+        duration: .middle,
+        actionText: "Close",
+        actionBlock: { (snackbar) in
+            snackbar.dismiss()
+        }
+    )
     
     private let pageControl: UIPageControl = UIPageControl()
     let scrollView: UIScrollView = {
@@ -44,11 +46,16 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemPink
         view.addSubview(scrollView)
         scrollView.delegate = self
         
         configureFloatingPanelView()
+        fetchAllData()
+    }
+    
+    private func fetchAllData() {
+        presenter?.fetchData()
     }
     
     @objc private func animateScrollView() {
@@ -140,7 +147,7 @@ extension HomeViewController {
 
 // MARK:- HomeViewController delegate protocol implementation
 
-extension HomeViewController: HomeView {
+extension HomeViewController: PresenterToHomeView {
     func update(with discountImageName: DiscountImageResourceResponse?) {
         timer?.invalidate()
         DispatchQueue.main.async {[weak self] in

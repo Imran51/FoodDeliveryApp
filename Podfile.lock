@@ -18,6 +18,7 @@ PODS:
     - SDWebImage/Core (= 5.11.0)
   - SDWebImage/Core (5.11.0)
   - SnapKit (5.0.1)
+  - TTGSnackbar (1.10.5)
 
 DEPENDENCIES:
   - FloatingPanel
@@ -28,6 +29,7 @@ DEPENDENCIES:
   - RxSwift
   - SDWebImage
   - SnapKit
+  - TTGSnackbar
 
 SPEC REPOS:
   trunk:
@@ -41,6 +43,7 @@ SPEC REPOS:
     - RxSwift
     - SDWebImage
     - SnapKit
+    - TTGSnackbar
 
 SPEC CHECKSUMS:
   Alamofire: bfbc4c2fe5909b1d94fb4ef2277c6b3727ef5dae
@@ -53,7 +56,8 @@ SPEC CHECKSUMS:
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  TTGSnackbar: 2bd245d2bbf83639483410273fd936af0b7ba2a9
 
-PODFILE CHECKSUM: 3ca6fc5d2c9e85cf4a0ed17e98c6315a0a406433
+PODFILE CHECKSUM: e9b10bfab676e930c19350a2361e7797ef001957
 
 COCOAPODS: 1.10.1

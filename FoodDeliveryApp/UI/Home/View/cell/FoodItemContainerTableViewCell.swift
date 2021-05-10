@@ -188,7 +188,7 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         
         titleImageView.snp.makeConstraints{
             make in
-            make.height.equalTo(100)
+            make.height.equalTo(200)
         }
         
         

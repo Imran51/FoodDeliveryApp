@@ -15,5 +15,6 @@ target 'FoodDeliveryApp' do
   pod 'FloatingPanel'
   pod 'ObjectMapper'
   pod 'SDWebImage'
+  pod "TTGSnackbar"
 
 end

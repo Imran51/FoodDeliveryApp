@@ -7,15 +7,15 @@
 
 import Foundation
 
-class HomeViewRouter: ViewRouter {
+class HomeViewRouter: PresenterToRouter {
     var entry: EntryPoint?
     
-    static func start() -> ViewRouter {
+    static func start() -> PresenterToRouter {
         let router = HomeViewRouter()
         // Assign VIP
-        var view: HomeView = HomeViewController()
-        var presenter: Presenter = HomeViewPresenter()
-        var interactor: Interactor = HomeViewInteractor()
+        var view: PresenterToHomeView = HomeViewController()
+        var presenter: HomeViewToPresenter & InteractorToPresenter = HomeViewPresenter()
+        var interactor: PresenterToInteractor = HomeViewInteractor()
         
         view.presenter = presenter
         
@@ -24,6 +24,7 @@ class HomeViewRouter: ViewRouter {
         presenter.router = router
         presenter.view = view
         presenter.interactor = interactor
+        interactor.presenter = presenter
         
         router.entry = view as? EntryPoint
         

@@ -8,7 +8,6 @@
 import UIKit
 
 class FoodItemContainerViewController: UIViewController {
-    
     private var foodItems = [FoodItem]()
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -16,7 +15,16 @@ class FoodItemContainerViewController: UIViewController {
         
         return table
     }()
-
+    
+    private let segmentItems: [FoodTypes] = [.Pizza,.Sushi,.Drinks]
+    
+    private let segmentControll: UISegmentedControl = {
+        let segment = UISegmentedControl(items: [FoodTypes.Pizza.rawValue, FoodTypes.Sushi.rawValue, FoodTypes.Drinks.rawValue])
+        segment.selectedSegmentIndex = 0
+        
+        return segment
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -28,6 +36,7 @@ class FoodItemContainerViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .interactive
+        configureSegmentControlItems()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,16 +45,36 @@ class FoodItemContainerViewController: UIViewController {
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
-        tableView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+        tableView.frame = CGRect(x: 0, y: 50, width: view.bounds.width, height: view.bounds.height)
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 50, right: 0)
         //tableView.contentInsetAdjustmentBehavior = .automatic
     }
+    
+    private func configureSegmentControlItems() {
+        view.addSubview(segmentControll)
+        
+        segmentControll.backgroundColor = .white
+        let font = UIFont.init(name: BaseFonts.roboto_bold.customFont, size: 24)
+        
+        segmentControll.setTitleTextAttributes([.font: font as Any,.foregroundColor: UIColor.lightGray], for: .normal)
+        segmentControll.setTitleTextAttributes([.font: font as Any,.foregroundColor: UIColor.black], for: .selected)
+        
+        segmentControll.removeBorders()
+        segmentControll.isHighlighted = false
+        
+        segmentControll.snp.makeConstraints{
+            make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalToSuperview().offset(50)
+            make.height.equalTo(50)
+        }
+    }
 }
-
 
 // MARK:- Update View methods implementation
 

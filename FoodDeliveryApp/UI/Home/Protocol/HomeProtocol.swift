@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-typealias EntryPoint = HomeView & UIViewController
+typealias EntryPoint = PresenterToHomeView & UIViewController
 
-protocol HomeView {
-    var presenter: Presenter? { get set }
+protocol PresenterToHomeView {
+    var presenter: HomeViewToPresenter? { get set }
     
     func update(with discountImageName: DiscountImageResourceResponse?)
     
@@ -22,19 +22,31 @@ protocol HomeView {
     func isLoading(isLoading: Bool)
 }
 
-protocol ViewRouter {
+protocol PresenterToRouter {
     var entry: EntryPoint? { get }
     
-    static func start()  -> ViewRouter
+    static func start()  -> PresenterToRouter
 }
 
-protocol Presenter {
-    var router: ViewRouter? { get set }
+protocol HomeViewToPresenter {
+    var router: PresenterToRouter? { get set }
     
-    var interactor: Interactor? { get set }
+    var interactor: PresenterToInteractor? { get set }
     
-    var view: HomeView? { get set }
+    var view: PresenterToHomeView? { get set }
     
+    func fetchData()
+}
+
+
+
+protocol PresenterToInteractor {
+    var presenter: InteractorToPresenter? { get set }
+    
+    func fetchData()
+}
+
+protocol InteractorToPresenter {
     func interactorDidFecthDiscountImageResouce(with result: DiscountImageResourceResponse?)
     
     func interactorDidFetchAllFoodItems(with foodItems: FoodItemsResponse?)
@@ -42,12 +54,6 @@ protocol Presenter {
     func interactorDidFailFetch(with error: String)
     
     func isLoading(isLoading: Bool)
-}
-
-protocol Interactor {
-    var presenter: Presenter? { get set }
-    
-    func getDiscountImageResouce()
 }
 
 //protocol ViewToPresenterProtocol: class {

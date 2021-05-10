@@ -8,8 +8,8 @@
 import Foundation
 import RxSwift
 
-class HomeViewInteractor: Interactor {
-    var presenter: Presenter?
+class HomeViewInteractor: PresenterToInteractor {
+    var presenter: InteractorToPresenter?
     
     private let service: NetworkManager
     let disposeBag = DisposeBag()
@@ -18,7 +18,7 @@ class HomeViewInteractor: Interactor {
         self.service = service
     }
     
-    func getDiscountImageResouce() {
+    func fetchData() {
         presenter?.isLoading(isLoading: true)
         Observable.zip(service.fetchDiscountImageResourceName().asObservable(),service.fetchAllFoodItems().asObservable()).subscribe(onNext: ({[weak self] (response) in
             let (discountImageResouceName,foodItems) = response
@@ -30,6 +30,10 @@ class HomeViewInteractor: Interactor {
             self?.presenter?.interactorDidFailFetch(with: errorValue.message)
             self?.presenter?.isLoading(isLoading: false)
         })).disposed(by: disposeBag)
+    }
+    
+    func getDiscountImageResouce() {
+        
     }
     
     
