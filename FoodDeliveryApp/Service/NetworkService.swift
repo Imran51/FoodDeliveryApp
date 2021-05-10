@@ -22,7 +22,7 @@ extension NetworkService: TargetType {
         case .discounts:
             return "/discounts_scheme"
         case .foodItems:
-            return "/"
+            return "/foodItems"
         }
     }
     

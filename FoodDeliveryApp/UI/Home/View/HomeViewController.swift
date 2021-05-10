@@ -9,17 +9,27 @@ import UIKit
 import SnapKit
 import FloatingPanel
 
-class HomeViewController: UIViewController, HomeView {
+
+class HomeViewController: UIViewController {
+    
     var presenter: Presenter?
     var imageResourceNames = [String]()
+    
     private var timer: Timer?
     private var fpc = FloatingPanelController()
     
+    let snackbar = Snackbar(message: "",
+                               duration: .middle,
+                               actionText: "Close",
+                               actionBlock: { (snackbar) in
+                                snackbar.dismiss()
+    })
     
+    private let pageControl: UIPageControl = UIPageControl()
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.backgroundColor = .red
+        
         scroll.showsHorizontalScrollIndicator = false
         scroll.showsVerticalScrollIndicator = false
         scroll.isPagingEnabled = true
@@ -29,76 +39,16 @@ class HomeViewController: UIViewController, HomeView {
         return scroll
     }()
     
-    let pageControl: UIPageControl = UIPageControl()
-    
-    func update(with discountImageName: DiscountImageResourceResponse?) {
-        timer?.invalidate()
-        DispatchQueue.main.async {[weak self] in
-            guard let imageNames = discountImageName?.img else { return }
-            self?.imageResourceNames = imageNames
-            self?.configureUIScorllViewWithImageView()
-            self?.configurePageControl()
-            //self?.scheduledTimerWithTimeInterval()
-        }
-        
-    }
-    
-    func update(with error: String) {
-        print(error)
-    }
-    
-    
-    private let sushiViewController = SushiViewController()
+    private let foodItemViewController = FoodItemContainerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.delegate = self
+        
         configureFloatingPanelView()
-    }
-    
-    private func configureFloatingPanelView() {
-        fpc.set(contentViewController: sushiViewController)
-        fpc = FloatingPanelController(delegate: self)
-        fpc.addPanel(toParent: self)
-        fpc.contentMode = .fitToBounds
-        
-        // Create a new appearance.
-        let appearance = SurfaceAppearance()
-        
-        // Define shadows
-        let shadow = SurfaceAppearance.Shadow()
-        shadow.color = UIColor.black
-        shadow.offset = CGSize(width: 0, height: 16)
-        shadow.radius = 16
-        shadow.spread = 8
-        appearance.shadows = [shadow]
-        
-        // Define corner radius and background color
-        appearance.cornerRadius = 20
-        appearance.backgroundColor = .systemBackground
-        
-        // Set the new appearance
-        fpc.surfaceView.appearance = appearance
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        
-        timer?.invalidate()
-    }
-    
-    private func configurePageControl() {
-        // The total number of pages that are available is based on how many available colors we have.
-        self.pageControl.numberOfPages = imageResourceNames.count
-        self.pageControl.currentPage = 0
-        self.pageControl.tintColor = UIColor.red
-        self.pageControl.pageIndicatorTintColor = .white
-        self.pageControl.currentPageIndicatorTintColor = .black
-        self.view.addSubview(pageControl)
-        pageControl.frame = CGRect(x: view.frame.width/2-100, y: view.frame.height/2, width: 200, height: 200)
     }
     
     @objc private func animateScrollView() {
@@ -120,8 +70,25 @@ class HomeViewController: UIViewController, HomeView {
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.animateScrollView), userInfo: nil, repeats: true)
     }
     
-    private func configureUIScorllViewWithImageView() {
-        scrollView.isHidden = false
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        scrollView.snp.makeConstraints{
+            make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(250)
+        }
+    }
+}
+
+// MARK:-  Views Item Configuration implementation
+
+extension HomeViewController {
+    
+    private func configureUIScorllViewWithImageView(_ isHidden: Bool = true) {
+        scrollView.isHidden = isHidden
         for index in 0..<imageResourceNames.count {
             let imageView = UIImageView()
             imageView.image = UIImage(named: imageResourceNames[index])
@@ -135,15 +102,81 @@ class HomeViewController: UIViewController, HomeView {
         scrollView.contentSize = CGSize(width:self.scrollView.frame.size.width * CGFloat((imageResourceNames.count)),height: self.scrollView.frame.size.height)
     }
     
+    private func configureFloatingPanelView() {
+        fpc.view.isHidden = true
+        fpc.set(contentViewController: foodItemViewController)
+        
+        fpc.delegate = self
+        fpc.addPanel(toParent: self)
+        fpc.contentMode = .fitToBounds
+        
+        let appearance = SurfaceAppearance()
+
+        // Define shadows
+        let shadow = SurfaceAppearance.Shadow()
+        shadow.color = .gray
+        shadow.offset = CGSize(width: 0, height: 16)
+        shadow.radius = 16
+        shadow.spread = 8
+        appearance.shadows = [shadow]
+
+        // Define corner radius and background color
+        appearance.cornerRadius = 20
+        appearance.backgroundColor = .white
+        // Set the new appearance
+        fpc.surfaceView.appearance = appearance
+    }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/2+150)
-        
+    private func configurePageControl() {
+        // The total number of pages that are available is based on how many available colors we have.
+        self.pageControl.numberOfPages = imageResourceNames.count
+        self.pageControl.currentPage = 0
+        self.pageControl.pageIndicatorTintColor = .darkGray
+        self.pageControl.currentPageIndicatorTintColor = .black
+        self.view.addSubview(pageControl)
+        pageControl.frame = CGRect(x: view.frame.width/2-100, y: view.frame.height/2, width: 200, height: 200)
     }
 }
 
+// MARK:- HomeViewController delegate protocol implementation
+
+extension HomeViewController: HomeView {
+    func update(with discountImageName: DiscountImageResourceResponse?) {
+        timer?.invalidate()
+        DispatchQueue.main.async {[weak self] in
+            guard let imageNames = discountImageName?.img else { return }
+            self?.imageResourceNames = imageNames
+            self?.configureUIScorllViewWithImageView(false)
+            self?.configurePageControl()
+            self?.fpc.view.isHidden = false
+            //self?.scheduledTimerWithTimeInterval()
+        }
+    }
+    
+    func update(with foodItems: FoodItemsResponse?){
+        guard let items = foodItems?.items else { return }
+        foodItemViewController.updateView(with: items)
+    }
+    
+    func update(with error: String) {
+        DispatchQueue.main.async {
+            self.snackbar.message = error
+            self.snackbar.messageTextColor = BaseColor.red.color
+            self.snackbar.backgroundColor = BaseColor.white.color
+            self.snackbar.show()
+        }
+        
+    }
+    
+    func isLoading(isLoading: Bool) {
+        DispatchQueue.main.async {
+            isLoading ? CustomLoadingIndicatorView.sharedInstance.showBlurView(withTitle: "Please Wait...") : CustomLoadingIndicatorView.sharedInstance.hide()
+        }
+    }
+}
+
+
+// MARK:- UIScrollView delegate and UIPageControll related implementation
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -156,6 +189,7 @@ extension HomeViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK:- Floating Bottom Panel Delegate implementation
 
 extension HomeViewController: FloatingPanelControllerDelegate {
     
@@ -172,9 +206,5 @@ extension HomeViewController: FloatingPanelControllerDelegate {
         } else {
             pageControl.isHidden = true
         }
-    }
-    
-    func floatingPanelWillBeginAttracting(_ fpc: FloatingPanelController, to state: FloatingPanelState) {
-        print(state.rawValue)
     }
 }

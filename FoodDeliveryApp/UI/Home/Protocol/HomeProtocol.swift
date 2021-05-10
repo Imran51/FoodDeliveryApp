@@ -15,7 +15,11 @@ protocol HomeView {
     
     func update(with discountImageName: DiscountImageResourceResponse?)
     
+    func update(with foodItems: FoodItemsResponse?)
+    
     func update(with error: String)
+    
+    func isLoading(isLoading: Bool)
 }
 
 protocol ViewRouter {
@@ -33,7 +37,11 @@ protocol Presenter {
     
     func interactorDidFecthDiscountImageResouce(with result: DiscountImageResourceResponse?)
     
+    func interactorDidFetchAllFoodItems(with foodItems: FoodItemsResponse?)
+    
     func interactorDidFailFetch(with error: String)
+    
+    func isLoading(isLoading: Bool)
 }
 
 protocol Interactor {

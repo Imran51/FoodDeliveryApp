@@ -46,5 +46,7 @@ final class NetworkManager: ApiService {
         return request(networkService: .discounts)
     }
 
-    
+    func fetchAllFoodItems() -> Single<FoodItemsResponse?> {
+        request(networkService: .foodItems)
+    }
 }

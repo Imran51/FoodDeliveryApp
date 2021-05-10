@@ -7,6 +7,6 @@
 
 import Foundation
 
-public class DiscountImageResourceResponse: Codable {
-    var img: [String] = []
+public struct  DiscountImageResourceResponse: Codable {
+    let img: [String]
 }

@@ -19,28 +19,17 @@ class HomeViewInteractor: Interactor {
     }
     
     func getDiscountImageResouce() {
-        service.fetchDiscountImageResourceName().subscribe(onSuccess: {[weak self] response in
-            print("response ---> \(response)")
-            self?.presenter?.interactorDidFecthDiscountImageResouce(with: response)
-            
-        }, onError: {[weak self] error in
-            self?.presenter?.interactorDidFailFetch(with: error.localizedDescription)
-            
-        }).disposed(by: disposeBag)
-       
-//
-//        Observable<DiscountImageResourceResponse>.zip(service.fetchDiscountImageResourceName()).subscribe(onNext: ({ (response) in
-//            let (upcomingResponse) = response
-//            self.upcomingMovieResponse(response: upcomingResponse)
-//            self.playingNowResponse(response: playingNowResponse)
-//            self.popularMovieResponse(response: popularResponse)
-//            self.genreMovieResponse(response: genreResponse)
-//            self.presenter?.isLoading(isLoading: false)
-//        }), onError: ({(error) in
-//            guard let errorValue = error as? APIError else { return }
-//            self.presenter?.fetchFailed(error: errorValue.message)
-//            self.presenter?.isLoading(isLoading: false)
-//        })).disposed(by: disposeBag)
+        presenter?.isLoading(isLoading: true)
+        Observable.zip(service.fetchDiscountImageResourceName().asObservable(),service.fetchAllFoodItems().asObservable()).subscribe(onNext: ({[weak self] (response) in
+            let (discountImageResouceName,foodItems) = response
+            self?.presenter?.interactorDidFecthDiscountImageResouce(with: discountImageResouceName)
+            self?.presenter?.interactorDidFetchAllFoodItems(with: foodItems)
+            self?.presenter?.isLoading(isLoading: false)
+        }), onError: ({[weak self] (error) in
+            guard let errorValue = error as? APIError else { return }
+            self?.presenter?.interactorDidFailFetch(with: errorValue.message)
+            self?.presenter?.isLoading(isLoading: false)
+        })).disposed(by: disposeBag)
     }
     
     

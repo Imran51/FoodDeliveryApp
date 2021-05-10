@@ -14,5 +14,6 @@ target 'FoodDeliveryApp' do
   pod 'IQKeyboardManagerSwift'
   pod 'FloatingPanel'
   pod 'ObjectMapper'
+  pod 'SDWebImage'
 
 end
