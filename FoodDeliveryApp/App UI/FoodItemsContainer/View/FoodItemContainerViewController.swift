@@ -49,9 +49,7 @@ class FoodItemContainerViewController: UIViewController {
         labelTwo.layer.borderColor = BaseColor.textGray.color.cgColor
         
         let spacerView = addComponent.horizontalSpacerView()
-        
-        let stack = addComponent.stackView(views: [filterNameLabel,labelOne,labelTwo,spacerView], axis: .horizontal)
-        stack.spacing = 5
+        let stack = addComponent.stackView(views: [filterNameLabel,labelOne,labelTwo,spacerView], axis: .horizontal, distribution: .fill, spacing: 5)
         
         return stack
     }()
@@ -216,7 +214,10 @@ extension FoodItemContainerViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodItemContainerTableViewCell.identifier, for: indexPath) as? FoodItemContainerTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodItemContainerTableViewCell.identifier, for: indexPath) as? FoodItemContainerTableViewCell else {
+            return UITableViewCell()
+        }
+        
         let item = foodItems[indexPath.row]
         cell.configure(with: item.info, withImageUrl: item.imgUrl, withItemId: item.id)
         cell.contentView.backgroundColor = .white

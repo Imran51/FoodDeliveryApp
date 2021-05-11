@@ -17,41 +17,24 @@ class FoodItemContainerTableViewCell: UITableViewCell {
     static let identifier = "FoodItemContainerTableViewCell"
     
     weak var delegate: FoodItemContainerTableViewCellDelegate?
+    
     private var priceButtonTapCounter = 0
+    private var itemId: Int?
+    
     private let titleImageView: UIImageView = {
         let image = CustomImageView()
         
         return image
     }()
     
-    private var itemId: Int?
-    
-    private let parentStackview: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .fill
-        stack.distribution = .fill
-        
-        return stack
-    }()
-    
     private let containerView: UIView = {
         let view = CardView()
         view.backgroundColor = .white
-
+        
         return view
     }()
     
-    private let emptyStackview: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.alignment = .fill
-        stack.distribution = .fill
-        
-        return stack
-    }()
-    
-    private let emptyFixedheightStackview: UIStackView = {
+    private let parentStackview: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.alignment = .fill
@@ -83,6 +66,24 @@ class FoodItemContainerTableViewCell: UITableViewCell {
     private let subHorizontalStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
+        stack.alignment = .fill
+        stack.distribution = .fill
+        
+        return stack
+    }()
+    
+    private let emptyStackview: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .fill
+        stack.distribution = .fill
+        
+        return stack
+    }()
+    
+    private let emptyFixedheightStackview: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .fill
         
@@ -128,17 +129,15 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         containerView.addSubview(containerStackView)
         
         containerStackView.addArrangedSubview(titleImageView)
+        containerStackView.addArrangedSubview(subContainerStackView)
+        containerStackView.addArrangedSubview(emptyFixedheightStackview)
         
         subContainerStackView.addArrangedSubview(titleTypeLabel)
         subContainerStackView.addArrangedSubview(descriptionLabel)
+        subContainerStackView.addArrangedSubview(subHorizontalStackView)
         
         subHorizontalStackView.addArrangedSubview(bottomInfoLabel)
         subHorizontalStackView.addArrangedSubview(rightSidePriceButton)
-        
-        subContainerStackView.addArrangedSubview(subHorizontalStackView)
-        
-        containerStackView.addArrangedSubview(subContainerStackView)
-        containerStackView.addArrangedSubview(emptyFixedheightStackview)
         
         setUpConstaints()
     }
@@ -220,19 +219,34 @@ class FoodItemContainerTableViewCell: UITableViewCell {
     }
 }
 
+
 extension FoodItemContainerTableViewCell {
     @objc private func priceButtonTapped(_ sender: UIButton){
         let oldButtonTitle = sender.currentTitle ?? ""
         priceButtonTapCounter += 1
         delegate?.priceButtonClicked(withItemId: itemId ?? 456666565, withPrice: oldButtonTitle)
-        UIView.transition(with: rightSidePriceButton, duration: 1, options: .transitionFlipFromRight, animations: { [unowned self] in
-            self.rightSidePriceButton.setTitle("added +\(self.priceButtonTapCounter)", for: .normal)
-            self.rightSidePriceButton.backgroundColor = .green
-        }, completion: {[weak self] _ in
-            UIView.transition(with: self!.rightSidePriceButton, duration: 1, options: .transitionFlipFromLeft, animations: {
-                self?.rightSidePriceButton.backgroundColor = .black
-                self?.rightSidePriceButton.setTitle(oldButtonTitle, for: .normal)
-            })
-        })
+        
+        UIView.transition(
+            with: rightSidePriceButton,
+            duration: 1,
+            options: .transitionFlipFromRight,
+            animations: {
+                [unowned self] in
+                self.rightSidePriceButton.setTitle("added +\(self.priceButtonTapCounter)", for: .normal)
+                self.rightSidePriceButton.backgroundColor = .green
+            },
+            completion: {
+                [weak self] _ in
+                UIView.transition(
+                    with: self!.rightSidePriceButton,
+                    duration: 1,
+                    options: .transitionFlipFromLeft,
+                    animations: {
+                        self?.rightSidePriceButton.backgroundColor = .black
+                        self?.rightSidePriceButton.setTitle(oldButtonTitle, for: .normal)
+                    }
+                )
+            }
+        )
     }
 }

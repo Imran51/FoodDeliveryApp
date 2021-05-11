@@ -18,9 +18,7 @@ class HomeViewRouter: PresenterToRouter {
         var interactor: PresenterToInteractor = HomeViewInteractor()
         
         view.presenter = presenter
-        
         interactor.presenter = presenter
-        
         presenter.router = router
         presenter.view = view
         presenter.interactor = interactor
@@ -33,7 +31,11 @@ class HomeViewRouter: PresenterToRouter {
     
     func showFloatingPanelView(from viewController: UIViewController, withFloatingPanel fpc: FloatingPanelController, withFoodItemsData foodItems: FoodItemsResponse?) {
         let foodItemsViewRouter = FoodItemViewRouter()
-        guard let items = foodItems?.items else { return }
+        
+        guard let items = foodItems?.items else {
+            return
+        }
+        
         foodItemsViewRouter.showFoodItemViewFloatingPanel(from: viewController, withfloatingPanelView: fpc, with: items)
     }
 }

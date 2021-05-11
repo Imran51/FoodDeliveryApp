@@ -16,9 +16,7 @@ class FoodItemViewRouter: PresenterToFoodItemViewRouter {
         var interactor: PresenterToFoodItemViewInteractor = FoodItemViewInteractor()
         
         view.presenter = presenter
-        
         interactor.presenter = presenter
-        
         presenter.router = router
         presenter.view = view
         presenter.interactor = interactor

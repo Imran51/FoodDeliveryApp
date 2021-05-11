@@ -8,7 +8,6 @@
 import Foundation
 import FloatingPanel
 
-
 protocol PresenterToFoodItemView {
     var presenter: FoodItemViewToPresenter? { get set }
     

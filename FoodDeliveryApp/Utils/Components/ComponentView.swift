@@ -27,7 +27,7 @@ public protocol IComponentView {
     func buttonCustomFont(id: String, title: String, corner: CGFloat, bgColor: BaseColor, textColor: BaseColor, isBorder: Bool, fontSize: CGFloat, type: BaseFonts, borderColor: BaseColor) -> UIButton
     func tableView(dataSource: UITableViewDataSource, delegate: UITableViewDelegate) -> UITableView
     
-    func stackView(views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView
+    func stackView(views: [UIView], axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, spacing: CGFloat) -> UIStackView
     
     func showSnackBar(withMessage message: String, withType type: SnackBarType)
     
@@ -150,12 +150,12 @@ open class ComponentView: IComponentView {
         return tableView
     }
     
-    public func stackView(views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView {
+    public func stackView(views: [UIView], axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, spacing: CGFloat) -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = axis
-        stackView.distribution = .fillEqually
+        stackView.distribution = distribution
         stackView.alignment = .fill
-        stackView.spacing = 0
+        stackView.spacing = spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView

@@ -46,7 +46,6 @@ class CustomLoadingIndicatorView {
     }
     
     func show() -> Void {
-        
         container.backgroundColor = UIColor.black.withAlphaComponent(0.85)
         activityIndicatorView.style = UIActivityIndicatorView.Style.large
         activityIndicatorView.center = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
@@ -64,7 +63,6 @@ class CustomLoadingIndicatorView {
     }
     
     func showWithBlurView() {
-        
         //only apply the blur if the user hasn't disabled transparency effects
         if !UIAccessibility.isReduceTransparencyEnabled {
             container.backgroundColor = UIColor.clear
