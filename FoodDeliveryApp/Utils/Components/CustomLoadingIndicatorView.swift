@@ -37,7 +37,7 @@ class CustomLoadingIndicatorView {
         textLabel.textAlignment = .center
         textLabel.numberOfLines = 0
         textLabel.font = UIFont.init(name: BaseFonts.roboto_bold.customFont, size: 14)
-        textLabel.textColor = UIColor.darkGray
+        textLabel.textColor = UIColor.white
         
         //Blur Effect
         //always fill the view
@@ -89,7 +89,6 @@ class CustomLoadingIndicatorView {
     }
     
     func hide() {
-        
         UIView.animate(withDuration: 0.5, animations: {
             self.container.alpha = 0.0
         }) { finished in
@@ -103,16 +102,16 @@ class CustomLoadingIndicatorView {
         }
     }
     
-    func show(withTitle title: String?) {
+    func show(withTitle title: String?, withActivityContainerBackgroundColor backgroundColor: UIColor = .darkGray, withActivityIndicatorColor color: UIColor = .white) {
         
         container.backgroundColor = UIColor.clear
         
-        subContainer.backgroundColor = UIColor.darkGray
+        subContainer.backgroundColor = backgroundColor
         subContainer.center = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
         container.addSubview(subContainer)
         
         activityIndicatorView.style = UIActivityIndicatorView.Style.medium
-        activityIndicatorView.color = UIColor.black
+        activityIndicatorView.color = color
         activityIndicatorView.frame = CGRect(x: 0, y: 10, width: subContainer.bounds.width, height: subContainer.bounds.height / 3.0)
         activityIndicatorView.center = CGPoint(x: activityIndicatorView.center.x, y: activityIndicatorView.center.y)
         subContainer.addSubview(activityIndicatorView)
@@ -132,16 +131,16 @@ class CustomLoadingIndicatorView {
         })
     }
     
-    func showDarkBackgroundView(withTitle title: String?) {
+    func showDarkBackgroundView(withTitle title: String?, withActivityContainerBackgroundColor backgroundColor: UIColor = .darkGray, withActivityIndicatorColor color: UIColor = .white) {
         
         container.backgroundColor = UIColor.black.withAlphaComponent(0.85)
         
-        subContainer.backgroundColor = UIColor.darkGray
+        subContainer.backgroundColor = backgroundColor
         subContainer.center = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
         container.addSubview(subContainer)
         
         activityIndicatorView.style = UIActivityIndicatorView.Style.medium
-        activityIndicatorView.color = .white
+        activityIndicatorView.color = color
         activityIndicatorView.frame = CGRect(x: 0, y: 10, width: subContainer.bounds.width, height: subContainer.bounds.height / 3.0)
         activityIndicatorView.center = CGPoint(x: activityIndicatorView.center.x, y: activityIndicatorView.center.y)
         subContainer.addSubview(activityIndicatorView)
@@ -161,7 +160,7 @@ class CustomLoadingIndicatorView {
         })
     }
     
-    func showBlurView(withTitle title: String?) {
+    func showBlurView(withTitle title: String?, withActivityContainerBackgroundColor backgroundColor: UIColor = .darkGray, withActivityIndicatorColor color: UIColor = .white) {
         
         //only apply the blur if the user hasn't disabled transparency effects
         if !UIAccessibility.isReduceTransparencyEnabled {
@@ -171,8 +170,8 @@ class CustomLoadingIndicatorView {
             container.backgroundColor = UIColor.black.withAlphaComponent(0.85)
         }
         
-        subContainer.backgroundColor = .systemGroupedBackground
-        activityIndicatorView.color = .white
+        subContainer.backgroundColor = backgroundColor
+        activityIndicatorView.color = color
         subContainer.center = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
         container.addSubview(subContainer)
         

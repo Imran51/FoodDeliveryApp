@@ -10,7 +10,7 @@ import SDWebImage
 import SnapKit
 
 protocol FoodItemContainerTableViewCellDelegate: AnyObject {
-    func priceButtonClicked(with price: String)
+    func priceButtonClicked(withItemId itemId: Int, withPrice price: String)
 }
 
 class FoodItemContainerTableViewCell: UITableViewCell {
@@ -23,6 +23,8 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         
         return image
     }()
+    
+    private var itemId: Int?
     
     private let parentStackview: UIStackView = {
         let stack = UIStackView()
@@ -201,16 +203,16 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         bottomInfoLabel.text = nil
         rightSidePriceButton.setTitle(nil, for: .normal)
         priceButtonTapCounter = 0
+        itemId = nil
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
     }
     
-    func configure(with data: FoodItemDetails, withImageUrl url: String) {
-        contentView.backgroundColor = .systemBackground
+    func configure(with data: FoodItemDetails, withImageUrl url: String, withItemId itemId: Int) {
+        self.itemId = itemId
         titleImageView.sd_setImage(with: URL(string: url))
-        
         titleTypeLabel.text = data.name
         descriptionLabel.text = data.description
         bottomInfoLabel.text = data.size
@@ -222,13 +224,15 @@ extension FoodItemContainerTableViewCell {
     @objc private func priceButtonTapped(_ sender: UIButton){
         let oldButtonTitle = sender.currentTitle ?? ""
         priceButtonTapCounter += 1
-        delegate?.priceButtonClicked(with: oldButtonTitle)
+        delegate?.priceButtonClicked(withItemId: itemId ?? 456666565, withPrice: oldButtonTitle)
         UIView.transition(with: rightSidePriceButton, duration: 1, options: .transitionFlipFromRight, animations: { [unowned self] in
             self.rightSidePriceButton.setTitle("added +\(self.priceButtonTapCounter)", for: .normal)
             self.rightSidePriceButton.backgroundColor = .green
         }, completion: {[weak self] _ in
-            self?.rightSidePriceButton.backgroundColor = .black
-            self?.rightSidePriceButton.setTitle(oldButtonTitle, for: .normal)
+            UIView.transition(with: self!.rightSidePriceButton, duration: 1, options: .transitionFlipFromLeft, animations: {
+                self?.rightSidePriceButton.backgroundColor = .black
+                self?.rightSidePriceButton.setTitle(oldButtonTitle, for: .normal)
+            })
         })
     }
 }

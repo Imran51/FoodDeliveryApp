@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public enum BaseColor {
-    case appPrimary, appPrimaryDarker, textGray, lineGray, white, black, clear, red, yellow, transparentBlack
+    case appPrimary, appPrimaryDarker, textGray, lineGray, white, black, clear, red, yellow, transparentBlack, customWhite
     
     var color : UIColor {
         switch self {
@@ -33,6 +33,8 @@ public enum BaseColor {
             return UIColor.red
         case .yellow:
             return UIColor.yellow
+        case .customWhite:
+            return UIColor(red: 255, green: 255, blue: 255, alpha: 0.7)
         }
     }
 }

@@ -310,8 +310,6 @@
 			children = (
 				715C18322648EF4500026221 /* Extension */,
 				715C182B2648EE4C00026221 /* Components */,
-				715C18302648EF1500026221 /* BaseColor.swift */,
-				715C18352648F03200026221 /* BaseFonts.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -319,6 +317,8 @@
 		717046802647A9DC00656CE4 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				715C18302648EF1500026221 /* BaseColor.swift */,
+				715C18352648F03200026221 /* BaseFonts.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -326,11 +326,11 @@
 		717046812647B7BF00656CE4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				717046942647F8F000656CE4 /* Protocol */,
 				717046972647F92700656CE4 /* Router */,
 				717046982647F94600656CE4 /* Enum */,
-				717046942647F8F000656CE4 /* Protocol */,
-				717046962647F91B00656CE4 /* Interactor */,
 				717046952647F8FA00656CE4 /* Presenter */,
+				717046962647F91B00656CE4 /* Interactor */,
 				717046A12648372500656CE4 /* View */,
 			);
 			path = Home;

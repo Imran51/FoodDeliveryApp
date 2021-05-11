@@ -10,3 +10,7 @@ import Foundation
 enum FoodTypes: String {
     case Sushi, Pizza, Drinks
 }
+
+enum FoodFilterLevel: String {
+    case Spicy, VerySpicy = "Very Spicy", ExtraSpicy = "Extra Spicy"
+}

@@ -55,13 +55,8 @@ class BadgeButton : UIButton {
         labelText.font = UIFont.init(name: BaseFonts.roboto_regular.customFont, size: 12)
         labelText.alignmentMode = CATextLayerAlignmentMode.center
         labelText.foregroundColor = UIColor.white.cgColor
-        //let labelString = self.badgeValue.uppercased()
-        let labelFont = UIFont.init(name: BaseFonts.roboto_regular.customFont, size: 12)
-        //let attributes = [NSAttributedString.Key.font : labelFont]
         let w = self.frame.size.width
         let h = CGFloat(18.0)  // fixed height
-        //let labelWidth = min(w * 0.8, 10.0)    // Starting point
-//        _ = labelString.boundingRect(with: CGSize(width: labelWidth, height: h), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes as [NSAttributedString.Key : Any], context: nil)
         labelText.frame = CGRect(x: 0, y: 0, width: 18, height: h)
         
         //! Initialize outline, set frame and color

@@ -146,7 +146,7 @@ extension HomeViewController: PresenterToHomeView {
     
     func update(with error: String) {
         DispatchQueue.main.async {
-            addComponent.showErrorSnackBar(with: error)
+            addComponent.showSnackBar(withMessage: error, withType: .Error)
         }
     }
     

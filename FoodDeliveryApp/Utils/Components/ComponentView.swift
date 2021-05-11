@@ -29,11 +29,26 @@ public protocol IComponentView {
     
     func stackView(views: [UIView], axis: NSLayoutConstraint.Axis) -> UIStackView
     
-    func showErrorSnackBar(with error: String)
+    func showSnackBar(withMessage message: String, withType type: SnackBarType)
+    
+    func horizontalSpacerView() -> UIView
+}
+
+public enum SnackBarType {
+    case Error, Success, Ongoing
 }
 
 open class ComponentView: IComponentView {
-    public func showErrorSnackBar(with error: String) {
+    public func horizontalSpacerView() -> UIView {
+        let spacer = UIView()
+        let constraint = spacer.widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat.greatestFiniteMagnitude)
+        constraint.isActive = true
+        constraint.priority = .defaultLow
+        
+        return spacer
+    }
+    
+    public func showSnackBar(withMessage message: String, withType type: SnackBarType) {
         let snackbar = TTGSnackbar(
             message: " ",
             duration: .middle,
@@ -42,9 +57,28 @@ open class ComponentView: IComponentView {
                 snackbar.dismiss()
             }
         )
-        snackbar.message = error
-        snackbar.messageTextColor = BaseColor.red.color
-        snackbar.backgroundColor = BaseColor.white.color
+        
+        snackbar.cornerRadius = snackbar.frame.height/3
+        snackbar.messageTextFont = UIFont.init(name: BaseFonts.roboto_bold.customFont, size: 18)!
+        snackbar.actionTextFont = UIFont.init(name: BaseFonts.roboto_bold.customFont, size: 18)!
+        snackbar.messageTextAlign = .center
+
+        snackbar.message = message
+        switch type {
+        case .Error:
+            snackbar.messageTextColor = .red
+            snackbar.backgroundColor = .white
+            snackbar.actionTextColor = .red
+        case .Ongoing:
+            snackbar.messageTextColor = .white
+            snackbar.backgroundColor = .black
+            snackbar.actionTextColor = .white
+        default:
+            snackbar.messageTextColor = .white
+            snackbar.backgroundColor = .green
+            snackbar.actionTextColor = .white
+        }
+        
         snackbar.show()
     }
     
