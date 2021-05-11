@@ -27,5 +27,4 @@ public enum BaseFonts {
             return "Roboto-Regular"
         }
     }
-    
 }

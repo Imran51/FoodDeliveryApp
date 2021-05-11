@@ -23,7 +23,6 @@ class FoodItemViewInteractor: PresenterToFoodItemViewInteractor {
         service.fetchAllFoodItems()
             .observeOn(MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] tasks in
-                
                 self?.presenter?.interactorDidFetchAllFoodItems(with: tasks)
                 self?.presenter?.isLoading(isLoading: false)
             }) { [weak self] error in

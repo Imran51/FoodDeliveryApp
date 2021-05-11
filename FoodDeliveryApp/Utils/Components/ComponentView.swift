@@ -32,6 +32,8 @@ public protocol IComponentView {
     func showSnackBar(withMessage message: String, withType type: SnackBarType)
     
     func horizontalSpacerView() -> UIView
+    
+    func loadingActivityIndicator(isLoading: Bool)
 }
 
 public enum SnackBarType {
@@ -39,6 +41,10 @@ public enum SnackBarType {
 }
 
 open class ComponentView: IComponentView {
+    public func loadingActivityIndicator(isLoading: Bool) {
+        isLoading ? CustomLoadingIndicatorView.sharedInstance.showBlurView(withTitle: "Please Wait...") : CustomLoadingIndicatorView.sharedInstance.hide()
+    }
+    
     public func horizontalSpacerView() -> UIView {
         let spacer = UIView()
         let constraint = spacer.widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat.greatestFiniteMagnitude)

@@ -9,12 +9,10 @@ import Foundation
 import FloatingPanel
 
 class HomeViewRouter: PresenterToRouter {
-    
     var entry: EntryPoint?
     
     static func start() -> PresenterToRouter {
         let router = HomeViewRouter()
-        // Assign VIP
         var view: PresenterToHomeView = HomeViewController()
         var presenter: HomeViewToPresenter & InteractorToPresenter = HomeViewPresenter()
         var interactor: PresenterToInteractor = HomeViewInteractor()

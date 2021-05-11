@@ -9,8 +9,6 @@ import Foundation
 
 class FoodItemViewPresenter: FoodItemViewToPresenter {
     
-    
-    
     var router: PresenterToFoodItemViewRouter?
     
     var interactor: PresenterToFoodItemViewInteractor?

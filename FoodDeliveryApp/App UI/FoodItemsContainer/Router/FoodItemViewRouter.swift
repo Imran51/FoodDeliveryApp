@@ -11,7 +11,6 @@ import FloatingPanel
 class FoodItemViewRouter: PresenterToFoodItemViewRouter {
     static func createModule() -> FoodItemContainerViewController {
         let router = FoodItemViewRouter()
-        // Assign VIP
         let view = FoodItemContainerViewController()
         var presenter: FoodItemViewToPresenter & InteractorToFoodItemViewPresenter = FoodItemViewPresenter()
         var interactor: PresenterToFoodItemViewInteractor = FoodItemViewInteractor()
@@ -41,7 +40,6 @@ class FoodItemViewRouter: PresenterToFoodItemViewRouter {
             
             let appearance = SurfaceAppearance()
             
-            // Define shadows
             let shadow = SurfaceAppearance.Shadow()
             shadow.color = .gray
             shadow.offset = CGSize(width: 0, height: 16)
@@ -49,12 +47,9 @@ class FoodItemViewRouter: PresenterToFoodItemViewRouter {
             shadow.spread = 8
             appearance.shadows = [shadow]
             
-            // Define corner radius and background color
             appearance.cornerRadius = 20
             appearance.backgroundColor = .white
-            // Set the new appearance
             fpc.surfaceView.appearance = appearance
-            
         }
     }
 }

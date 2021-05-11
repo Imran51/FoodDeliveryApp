@@ -19,15 +19,13 @@ class HomeViewController: UIViewController {
     private var fpc = FloatingPanelController()
     
     private let pageControl: UIPageControl = UIPageControl()
-    let scrollView: UIScrollView = {
+    private let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        
         scroll.showsHorizontalScrollIndicator = false
         scroll.showsVerticalScrollIndicator = false
         scroll.isPagingEnabled = true
         scroll.isHidden = true
-        
         
         return scroll
     }()
@@ -43,9 +41,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemPink
-        view.addSubview(scrollView)
-        scrollView.delegate = self
-        
+        configureScrollView()
         fetchAllData()
     }
     
@@ -64,19 +60,30 @@ class HomeViewController: UIViewController {
         let currentXOffset = scrollView.contentOffset.x
         
         let lastXPos = currentXOffset + scrollWidth
-        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {[weak self] in
-            self?.scrollView.contentOffset.x = lastXPos != self?.scrollView.contentSize.width ? lastXPos : 0
-        })
-       
+        
+        UIView.animate(
+            withDuration: 1,
+            delay: 0, options: UIView.AnimationOptions.curveLinear,
+            animations: {
+                [weak self] in
+                self?.scrollView.contentOffset.x = lastXPos != self?.scrollView.contentSize.width ? lastXPos : 0
+            }
+        )
+        
         changePageNumber()
     }
     
     private func scheduledTimerWithTimeInterval(){
         timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.animateScrollView), userInfo: nil, repeats: true)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+}
+
+// MARK:-  Views Item Configuration implementation
+
+extension HomeViewController {
+    private func configureScrollView() {
+        view.addSubview(scrollView)
+        scrollView.delegate = self
         
         scrollView.snp.makeConstraints{
             make in
@@ -86,13 +93,8 @@ class HomeViewController: UIViewController {
             make.bottom.equalToSuperview().inset(250)
         }
     }
-}
-
-// MARK:-  Views Item Configuration implementation
-
-extension HomeViewController {
-    
     private func configureUIScorllViewWithImageView(_ isHidden: Bool = true) {
+        
         scrollView.isHidden = isHidden
         for index in 0..<imageResourceNames.count {
             let imageView = UIImageView()
@@ -108,7 +110,6 @@ extension HomeViewController {
     }
     
     private func configurePageControl() {
-        // The total number of pages that are available is based on how many available colors we have.
         self.pageControl.numberOfPages = imageResourceNames.count
         self.pageControl.currentPage = 0
         self.pageControl.pageIndicatorTintColor = .black
@@ -133,7 +134,6 @@ extension HomeViewController: PresenterToHomeView {
             self?.imageResourceNames = imageNames
             self?.configureUIScorllViewWithImageView(false)
             self?.configurePageControl()
-            
             self?.scheduledTimerWithTimeInterval()
         }
     }
@@ -152,7 +152,7 @@ extension HomeViewController: PresenterToHomeView {
     
     func isLoading(isLoading: Bool) {
         DispatchQueue.main.async {
-            isLoading ? CustomLoadingIndicatorView.sharedInstance.showBlurView(withTitle: "Please Wait...") : CustomLoadingIndicatorView.sharedInstance.hide()
+            addComponent.loadingActivityIndicator(isLoading: isLoading)
         }
     }
 }

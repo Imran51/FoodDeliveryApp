@@ -36,7 +36,7 @@ class FoodItemContainerViewController: UIViewController {
     
     private let filterLabelHolderStackview: UIStackView = {
         
-        let filterNameLabel = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: "FILTERS ", size: 14, addColor: BaseColor.textGray, align: .center)
+        let filterNameLabel = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: "FILTERS", size: 14, addColor: BaseColor.textGray, align: .center)
         
         let labelOne = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: FoodFilterLevel.Spicy.rawValue, size: 14, addColor: BaseColor.textGray, align: .center)
         labelOne.roundedView(cornerRadius: 15, bgColor: .clear, isShadow: true)
@@ -118,7 +118,7 @@ extension FoodItemContainerViewController: PresenterToFoodItemView {
     
     func isLoading(isLoading: Bool) {
         DispatchQueue.main.async {
-            isLoading ? CustomLoadingIndicatorView.sharedInstance.showBlurView(withTitle: "Please Wait...") : CustomLoadingIndicatorView.sharedInstance.hide()
+            addComponent.loadingActivityIndicator(isLoading: isLoading)
         }
     }
 }

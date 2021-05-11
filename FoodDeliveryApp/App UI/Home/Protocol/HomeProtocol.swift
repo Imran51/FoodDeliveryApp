@@ -60,4 +60,3 @@ protocol InteractorToPresenter {
     
     func isLoading(isLoading: Bool)
 }
-

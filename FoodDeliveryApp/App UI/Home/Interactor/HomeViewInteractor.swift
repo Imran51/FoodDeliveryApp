@@ -20,7 +20,10 @@ class HomeViewInteractor: PresenterToInteractor {
     
     func fetchData() {
         presenter?.isLoading(isLoading: true)
-        Observable.zip(service.fetchDiscountImageResourceName().asObservable(),service.fetchAllFoodItems().asObservable()).subscribe(onNext: ({[weak self] (response) in
+        Observable.zip(
+            service.fetchDiscountImageResourceName().asObservable(),
+            service.fetchAllFoodItems().asObservable()
+        ).subscribe(onNext:({[weak self] (response) in
             let (discountImageResouceName,foodItems) = response
             self?.presenter?.interactorDidFecthDiscountImageResouce(with: discountImageResouceName)
             self?.presenter?.interactorDidFetchAllFoodItems(with: foodItems)
@@ -31,10 +34,4 @@ class HomeViewInteractor: PresenterToInteractor {
             self?.presenter?.isLoading(isLoading: false)
         })).disposed(by: disposeBag)
     }
-    
-    func getDiscountImageResouce() {
-        
-    }
-    
-    
 }
