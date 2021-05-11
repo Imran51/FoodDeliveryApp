@@ -9,9 +9,15 @@ import UIKit
 import SDWebImage
 import SnapKit
 
+protocol FoodItemContainerTableViewCellDelegate: AnyObject {
+    func priceButtonClicked(with price: String)
+}
+
 class FoodItemContainerTableViewCell: UITableViewCell {
     static let identifier = "FoodItemContainerTableViewCell"
     
+    weak var delegate: FoodItemContainerTableViewCellDelegate?
+    private var priceButtonTapCounter = 0
     private let titleImageView: UIImageView = {
         let image = CustomImageView()
         
@@ -182,6 +188,8 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         
         subContainerStackView.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         subContainerStackView.isLayoutMarginsRelativeArrangement = true
+        
+        rightSidePriceButton.addTarget(self, action: #selector(priceButtonTapped(_:)), for: .touchUpInside)
     }
     
     override func prepareForReuse() {
@@ -192,11 +200,11 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         descriptionLabel.text = nil
         bottomInfoLabel.text = nil
         rightSidePriceButton.setTitle(nil, for: .normal)
+        priceButtonTapCounter = 0
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-       
     }
     
     func configure(with data: FoodItemDetails, withImageUrl url: String) {
@@ -207,5 +215,20 @@ class FoodItemContainerTableViewCell: UITableViewCell {
         descriptionLabel.text = data.description
         bottomInfoLabel.text = data.size
         rightSidePriceButton.setTitle(data.price, for: .normal)
+    }
+}
+
+extension FoodItemContainerTableViewCell {
+    @objc private func priceButtonTapped(_ sender: UIButton){
+        let oldButtonTitle = sender.currentTitle ?? ""
+        priceButtonTapCounter += 1
+        delegate?.priceButtonClicked(with: oldButtonTitle)
+        UIView.transition(with: rightSidePriceButton, duration: 1, options: .transitionFlipFromRight, animations: { [unowned self] in
+            self.rightSidePriceButton.setTitle("added +\(self.priceButtonTapCounter)", for: .normal)
+            self.rightSidePriceButton.backgroundColor = .green
+        }, completion: {[weak self] _ in
+            self?.rightSidePriceButton.backgroundColor = .black
+            self?.rightSidePriceButton.setTitle(oldButtonTitle, for: .normal)
+        })
     }
 }

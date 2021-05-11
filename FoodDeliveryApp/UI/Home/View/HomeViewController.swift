@@ -34,6 +34,11 @@ class HomeViewController: UIViewController {
     
     private let foodItemViewController = FoodItemContainerViewController()
     
+    deinit {
+        timer?.invalidate()
+        fpc.invalidateLayout()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +47,12 @@ class HomeViewController: UIViewController {
         scrollView.delegate = self
         
         fetchAllData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        timer?.invalidate()
     }
     
     private func fetchAllData() {
@@ -53,18 +64,15 @@ class HomeViewController: UIViewController {
         let currentXOffset = scrollView.contentOffset.x
         
         let lastXPos = currentXOffset + scrollWidth
-        if lastXPos != scrollView.contentSize.width {
-            scrollView.setContentOffset(CGPoint(x: lastXPos, y: 0), animated: true)
-        }
-        else {
-            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        }
+        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {[weak self] in
+            self?.scrollView.contentOffset.x = lastXPos != self?.scrollView.contentSize.width ? lastXPos : 0
+        })
+       
         changePageNumber()
     }
     
     private func scheduledTimerWithTimeInterval(){
-        // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.animateScrollView), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.animateScrollView), userInfo: nil, repeats: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -103,10 +111,16 @@ extension HomeViewController {
         // The total number of pages that are available is based on how many available colors we have.
         self.pageControl.numberOfPages = imageResourceNames.count
         self.pageControl.currentPage = 0
-        self.pageControl.pageIndicatorTintColor = .darkGray
-        self.pageControl.currentPageIndicatorTintColor = .black
+        self.pageControl.pageIndicatorTintColor = .black
+        self.pageControl.currentPageIndicatorTintColor = .white
         self.view.addSubview(pageControl)
-        pageControl.frame = CGRect(x: view.frame.width/2-100, y: view.frame.height/2, width: 200, height: 200)
+        pageControl.snp.makeConstraints{
+            make in
+            make.centerX.equalToSuperview().inset(100)
+            make.centerY.equalToSuperview().offset(100)
+            make.height.equalTo(200)
+            make.width.equalTo(200)
+        }
     }
 }
 
@@ -120,7 +134,7 @@ extension HomeViewController: PresenterToHomeView {
             self?.configureUIScorllViewWithImageView(false)
             self?.configurePageControl()
             
-            //self?.scheduledTimerWithTimeInterval()
+            self?.scheduledTimerWithTimeInterval()
         }
     }
     

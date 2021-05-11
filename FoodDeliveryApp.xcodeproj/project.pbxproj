@@ -45,7 +45,6 @@
 		717046872647EDC500656CE4 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046862647EDC500656CE4 /* NetworkService.swift */; };
 		717046892647EFFC00656CE4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046882647EFFC00656CE4 /* NetworkManager.swift */; };
 		7170468C2647F08500656CE4 /* DiscountImageResourceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170468B2647F08500656CE4 /* DiscountImageResourceResponse.swift */; };
-		7170468F2647F15D00656CE4 /* BaseResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170468E2647F15D00656CE4 /* BaseResponseObject.swift */; };
 		717046912647F38100656CE4 /* APIErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046902647F38100656CE4 /* APIErrorType.swift */; };
 		717046932647F3AA00656CE4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046922647F3AA00656CE4 /* Reachability.swift */; };
 		7170469A2647F96100656CE4 /* HomeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046992647F96100656CE4 /* HomeProtocol.swift */; };
@@ -53,6 +52,7 @@
 		7170469E2648012E00656CE4 /* HomeViewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170469D2648012E00656CE4 /* HomeViewInteractor.swift */; };
 		717046A026481A1100656CE4 /* HomeViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170469F26481A1100656CE4 /* HomeViewRouter.swift */; };
 		717046A62648804700656CE4 /* FoodItemContainerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717046A52648804700656CE4 /* FoodItemContainerTableViewCell.swift */; };
+		71CEB21A264A3D95002C08BF /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEB219264A3D95002C08BF /* BadgeButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,7 +95,6 @@
 		717046862647EDC500656CE4 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		717046882647EFFC00656CE4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7170468B2647F08500656CE4 /* DiscountImageResourceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountImageResourceResponse.swift; sourceTree = "<group>"; };
-		7170468E2647F15D00656CE4 /* BaseResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponseObject.swift; sourceTree = "<group>"; };
 		717046902647F38100656CE4 /* APIErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorType.swift; sourceTree = "<group>"; };
 		717046922647F3AA00656CE4 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		717046992647F96100656CE4 /* HomeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProtocol.swift; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		7170469D2648012E00656CE4 /* HomeViewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewInteractor.swift; sourceTree = "<group>"; };
 		7170469F26481A1100656CE4 /* HomeViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewRouter.swift; sourceTree = "<group>"; };
 		717046A52648804700656CE4 /* FoodItemContainerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemContainerTableViewCell.swift; sourceTree = "<group>"; };
+		71CEB219264A3D95002C08BF /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		DA7EBCF3E3C39093790A920D /* Pods-FoodDeliveryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.release.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.release.xcconfig"; sourceTree = "<group>"; };
 		DD982188638001781E823B45 /* Pods-FoodDeliveryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodDeliveryApp.debug.xcconfig"; path = "Target Support Files/Pods-FoodDeliveryApp/Pods-FoodDeliveryApp.debug.xcconfig"; sourceTree = "<group>"; };
 		F10F157AF2B338BECD8D6167 /* Pods_FoodDeliveryApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodDeliveryApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +144,7 @@
 				715C1857264940A600026221 /* CustomLoadingIndicatorView.swift */,
 				715C18952649A33200026221 /* CardView.swift */,
 				715C18A72649CB9900026221 /* CustomImageView.swift */,
+				71CEB219264A3D95002C08BF /* BadgeButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -339,7 +340,6 @@
 			isa = PBXGroup;
 			children = (
 				7170468B2647F08500656CE4 /* DiscountImageResourceResponse.swift */,
-				7170468E2647F15D00656CE4 /* BaseResponseObject.swift */,
 				715C18292648E93500026221 /* FoodItemsResponse.swift */,
 			);
 			path = Entity;
@@ -534,7 +534,6 @@
 				715C18AA2649CD6C00026221 /* UIImageView.swift in Sources */,
 				717046912647F38100656CE4 /* APIErrorType.swift in Sources */,
 				717046A62648804700656CE4 /* FoodItemContainerTableViewCell.swift in Sources */,
-				7170468F2647F15D00656CE4 /* BaseResponseObject.swift in Sources */,
 				717046932647F3AA00656CE4 /* Reachability.swift in Sources */,
 				7170466C2647A8C600656CE4 /* SceneDelegate.swift in Sources */,
 				715C18A82649CB9900026221 /* CustomImageView.swift in Sources */,
@@ -544,6 +543,7 @@
 				7170469E2648012E00656CE4 /* HomeViewInteractor.swift in Sources */,
 				7170469C2648000500656CE4 /* HomeViewPresenter.swift in Sources */,
 				715C183A2648F17800026221 /* UIView.swift in Sources */,
+				71CEB21A264A3D95002C08BF /* BadgeButton.swift in Sources */,
 				715C18382648F08700026221 /* ComponentView.swift in Sources */,
 				717046872647EDC500656CE4 /* NetworkService.swift in Sources */,
 				717046832647DC9600656CE4 /* FoodItemContainerViewController.swift in Sources */,
