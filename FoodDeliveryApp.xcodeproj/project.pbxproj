@@ -270,16 +270,12 @@
 		717046682647A8C600656CE4 /* FoodDeliveryApp */ = {
 			isa = PBXGroup;
 			children = (
-				715C18762649483600026221 /* Fonts */,
+				719486E4264AE7BD00FAD1CB /* Resources */,
+				7170467D2647A9A900656CE4 /* Service */,
 				7170468A2647F04300656CE4 /* Entity */,
+				7170467E2647A9BE00656CE4 /* App UI */,
 				717046802647A9DC00656CE4 /* Helper */,
 				7170467F2647A9D300656CE4 /* Utils */,
-				7170467E2647A9BE00656CE4 /* UI */,
-				7170467D2647A9A900656CE4 /* Service */,
-				717046692647A8C600656CE4 /* AppDelegate.swift */,
-				7170466B2647A8C600656CE4 /* SceneDelegate.swift */,
-				717046722647A8C700656CE4 /* Assets.xcassets */,
-				717046742647A8C700656CE4 /* LaunchScreen.storyboard */,
 				717046772647A8C700656CE4 /* Info.plist */,
 			);
 			path = FoodDeliveryApp;
@@ -296,13 +292,13 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		7170467E2647A9BE00656CE4 /* UI */ = {
+		7170467E2647A9BE00656CE4 /* App UI */ = {
 			isa = PBXGroup;
 			children = (
 				715C18972649A43400026221 /* FoodItemsContainer */,
 				717046812647B7BF00656CE4 /* Home */,
 			);
-			path = UI;
+			path = "App UI";
 			sourceTree = "<group>";
 		};
 		7170467F2647A9D300656CE4 /* Utils */ = {
@@ -390,6 +386,18 @@
 				7170466D2647A8C600656CE4 /* HomeViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		719486E4264AE7BD00FAD1CB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				715C18762649483600026221 /* Fonts */,
+				717046692647A8C600656CE4 /* AppDelegate.swift */,
+				7170466B2647A8C600656CE4 /* SceneDelegate.swift */,
+				717046722647A8C700656CE4 /* Assets.xcassets */,
+				717046742647A8C700656CE4 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
