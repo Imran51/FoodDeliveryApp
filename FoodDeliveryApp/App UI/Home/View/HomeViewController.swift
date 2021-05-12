@@ -14,17 +14,20 @@ class HomeViewController: UIViewController {
     
     var presenter: HomeViewToPresenter?
     var imageResourceNames = [String]()
+    
     struct PageControlConstraintConstant {
         static let initialCenterXInset = 100
-        static let initialCenterYOffset = 0
+        static let initialCenterYOffset = -10
         static let height = 200
         static let width = 200
-        static let updatedCenterYOffset = HomeViewController().view.frame.height/4+100
+        static let updatedCenterYOffset = HomeViewController().view.frame.height/4+90
     }
+    
     private struct ScrollViewConstaraintConstant {
         static let initialBottomInset = 250
         static let updatedBottomInset = 100
     }
+    
     private var timer: Timer?
     private var fpc = FloatingPanelController()
     

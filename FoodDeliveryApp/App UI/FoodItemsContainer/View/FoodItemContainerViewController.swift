@@ -11,6 +11,32 @@ import TTGSnackbar
 class FoodItemContainerViewController: UIViewController {
     var presenter: FoodItemViewToPresenter?
     
+    private struct TablviewConstraintConstant{
+        static let topOffset = 140
+        static let leadingOffset = 20
+        static let traillingInset = 20
+    }
+    
+    private struct FilterOptionHolderStackviewConstraintConstant {
+        static let topOffset = 100
+        static let leadingOffset = 20
+        static let height = 30
+    }
+    
+    private struct FabButtonConstraintConstant {
+        static let bottomInset = 150
+        static let rightInset = 30
+        static let height = 70
+        static let width = 70
+    }
+    
+    private struct StringConstant {
+        static let filter = "FILTERS"
+        static let buttonImageName = "add-to-cart"
+        static let onProgressMessage = "Sorry!Implementation is on progress."
+        static let finisherYetMessage = "Woops!This feature has not finished yet."
+    }
+    
     private var fabButtonBadgeCounter = 0
     private var foodItems = [FoodItem]()
     
@@ -27,29 +53,35 @@ class FoodItemContainerViewController: UIViewController {
     private let fabButton: BadgeButton = {
         let button = BadgeButton()
         button.clipsToBounds = true
-        button.setImage(UIImage(named: "add-to-cart"), for: .normal)
+        button.setImage(UIImage(named: StringConstant.buttonImageName), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 5, bottom: 15, right: 15)
         button.roundedView(cornerRadius: 35, bgColor: .white, isShadow: true)
         
         return button
     }()
     
+    
+    
     private let filterLabelHolderStackview: UIStackView = {
+        let fontSize: CGFloat = 14
+        let cornerRadius: CGFloat = 15
+        let borderWidth: CGFloat = 1
+        let spacing: CGFloat = 5
         
-        let filterNameLabel = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: "FILTERS", size: 14, addColor: BaseColor.textGray, align: .center)
+        let filterNameLabel = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: StringConstant.filter, size: fontSize, addColor: BaseColor.textGray, align: .center)
         
-        let labelOne = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: FoodFilterLevel.Spicy.rawValue, size: 14, addColor: BaseColor.textGray, align: .center)
-        labelOne.roundedView(cornerRadius: 15, bgColor: .clear, isShadow: true)
-        labelOne.layer.borderWidth = 1
+        let labelOne = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: FoodFilterLevel.Spicy.rawValue, size: fontSize, addColor: BaseColor.textGray, align: .center)
+        labelOne.roundedView(cornerRadius: cornerRadius, bgColor: .clear, isShadow: true)
+        labelOne.layer.borderWidth = borderWidth
         labelOne.layer.borderColor = BaseColor.textGray.color.cgColor
         
-        let labelTwo = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: FoodFilterLevel.VerySpicy.rawValue, size: 14, addColor: BaseColor.textGray, align: .center)
-        labelTwo.roundedView(cornerRadius: 15, bgColor: .clear, isShadow: true)
-        labelTwo.layer.borderWidth = 1
+        let labelTwo = addComponent.label(id: "", type: BaseFonts.roboto_medium, text: FoodFilterLevel.VerySpicy.rawValue, size: fontSize, addColor: BaseColor.textGray, align: .center)
+        labelTwo.roundedView(cornerRadius: cornerRadius, bgColor: .clear, isShadow: true)
+        labelTwo.layer.borderWidth = borderWidth
         labelTwo.layer.borderColor = BaseColor.textGray.color.cgColor
         
         let spacerView = addComponent.horizontalSpacerView()
-        let stack = addComponent.stackView(views: [filterNameLabel,labelOne,labelTwo,spacerView], axis: .horizontal, distribution: .fill, spacing: 5)
+        let stack = addComponent.stackView(views: [filterNameLabel,labelOne,labelTwo,spacerView], axis: .horizontal, distribution: .fill, spacing: spacing)
         
         return stack
     }()
@@ -125,6 +157,7 @@ extension FoodItemContainerViewController: PresenterToFoodItemView {
 // MARK:- View configuration related method implementation
 
 extension FoodItemContainerViewController {
+    
     private func configureTablviewInitialization(){
         view.addSubview(tableView)
         tableView.backgroundColor = nil
@@ -136,10 +169,10 @@ extension FoodItemContainerViewController {
         tableView.keyboardDismissMode = .interactive
         
         tableView.snp.makeConstraints{ make in
-            make.top.equalToSuperview().offset(140)
+            make.top.equalToSuperview().offset(TablviewConstraintConstant.topOffset)
             make.bottom.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().offset(TablviewConstraintConstant.leadingOffset)
+            make.trailing.equalToSuperview().inset(TablviewConstraintConstant.traillingInset)
         }
         
         leftSwipe.direction = .left
@@ -148,6 +181,11 @@ extension FoodItemContainerViewController {
         tableView.addGestureRecognizer(rightSwipe)
         leftSwipe.addTarget(self, action: #selector(moveToNextItem(_:)))
         rightSwipe.addTarget(self, action: #selector(moveToNextItem(_:)))
+    }
+    
+    private struct SegmentControlConstraintConstant {
+        static let topOffset = 50
+        static let height = 50
     }
     
     private func configureSegmentControlItems() {
@@ -167,18 +205,18 @@ extension FoodItemContainerViewController {
             make in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(50)
-            make.height.equalTo(50)
+            make.top.equalToSuperview().offset(SegmentControlConstraintConstant.topOffset)
+            make.height.equalTo(SegmentControlConstraintConstant.height)
         }
     }
     
     private func configureBottomFloatingFabButton() {
         view.addSubview(fabButton)
         fabButton.snp.makeConstraints{ make in
-            make.bottom.equalToSuperview().inset(150)
-            make.right.equalToSuperview().inset(30)
-            make.height.equalTo(70)
-            make.width.equalTo(70)
+            make.bottom.equalToSuperview().inset(FabButtonConstraintConstant.bottomInset)
+            make.right.equalToSuperview().inset(FabButtonConstraintConstant.rightInset)
+            make.height.equalTo(FabButtonConstraintConstant.height)
+            make.width.equalTo(FabButtonConstraintConstant.width)
         }
         fabButton.addTarget(self, action: #selector(fabbuttonClicked(_:)), for: .touchUpInside)
     }
@@ -187,10 +225,10 @@ extension FoodItemContainerViewController {
         view.addSubview(filterLabelHolderStackview)
         filterLabelHolderStackview.snp.makeConstraints{
             make in
-            make.top.equalToSuperview().offset(100)
-            make.leading.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(FilterOptionHolderStackviewConstraintConstant.topOffset)
+            make.leading.equalToSuperview().offset(FilterOptionHolderStackviewConstraintConstant.leadingOffset)
             make.trailing.equalToSuperview()
-            make.height.equalTo(30)
+            make.height.equalTo(FilterOptionHolderStackviewConstraintConstant.height)
         }
     }
 }
@@ -229,7 +267,7 @@ extension FoodItemContainerViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        addComponent.showSnackBar(withMessage: "Sorry!Implementation is on progress.", withType: .Ongoing)
+        addComponent.showSnackBar(withMessage: StringConstant.onProgressMessage, withType: .Ongoing)
     }
 }
 
@@ -252,7 +290,7 @@ extension FoodItemContainerViewController {
     @objc private func fabbuttonClicked(_ sender: UIButton) {
         fabButtonBadgeCounter = 0
         fabButton.badgeValue = ""
-        addComponent.showSnackBar(withMessage: "Woops!This feature has not finished yet.", withType: .Ongoing)
+        addComponent.showSnackBar(withMessage: StringConstant.finisherYetMessage, withType: .Ongoing)
     }
 }
 
