@@ -57,13 +57,7 @@ class HomeViewController: UIViewController {
         configureScrollView()
         fetchAllData()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        timer?.invalidate()
-    }
-    
+   
     private func fetchAllData() {
         presenter?.fetchData()
     }
@@ -144,6 +138,7 @@ extension HomeViewController {
 
 extension HomeViewController: PresenterToHomeView {
     func update(with discountImageName: DiscountImageResourceResponse?) {
+        timer?.invalidate()
         DispatchQueue.main.async {[weak self] in
             guard let imageNames = discountImageName?.img else { return }
             self?.imageResourceNames = imageNames
@@ -207,6 +202,5 @@ extension HomeViewController: FloatingPanelControllerDelegate {
             self?.scrollView.setNeedsLayout()
             self?.scrollView.layoutIfNeeded()
         })
-        
     }
 }

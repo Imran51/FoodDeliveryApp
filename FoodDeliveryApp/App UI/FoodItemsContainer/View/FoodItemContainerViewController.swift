@@ -7,6 +7,8 @@
 
 import UIKit
 import TTGSnackbar
+import RxCocoa
+import RxSwift
 
 class FoodItemContainerViewController: UIViewController {
     var presenter: FoodItemViewToPresenter?
@@ -38,8 +40,8 @@ class FoodItemContainerViewController: UIViewController {
     }
     
     private var fabButtonBadgeCounter = 0
-    private var foodItems = [FoodItem]()
-    
+    private var rxFoodItems = BehaviorRelay(value: [FoodItem]())
+    private let bag = DisposeBag()
     private let leftSwipe = UISwipeGestureRecognizer()
     private let rightSwipe = UISwipeGestureRecognizer()
     
@@ -97,10 +99,20 @@ class FoodItemContainerViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
         configureTablviewInitialization()
+        
         configureSegmentControlItems()
         configureBottomFloatingFabButton()
         configureFilterOptionHolderStackview()
+        /*
+         At viewDidLoad, viewController.view.frame == .zero, if you call bind(to) datasource for tableView, will cause layoutIfNeeds to be called.
+         At this time the auto layout constraint will not work correctly (due to frame = .zero).
+         To avoid this, you can use DispatchQueue.main.async for delaying the bind(to:) call will suppress the warning.
+         */
+        DispatchQueue.main.async {[weak self] in
+            self?.bindTableViewWithRxDataSource()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,6 +120,30 @@ class FoodItemContainerViewController: UIViewController {
         
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    private func bindTableViewWithRxDataSource() {
+        rxFoodItems
+            .bind(
+                to: tableView
+                    .rx
+                    .items(
+                        cellIdentifier: FoodItemContainerTableViewCell.identifier,
+                        cellType: FoodItemContainerTableViewCell.self
+                    )
+            ) { (row,item,cell) in
+                cell.configure(with: item.info, withImageUrl: item.imgUrl, withItemId: item.id)
+                cell.contentView.backgroundColor = .white
+                cell.delegate = self
+                cell.selectionStyle = .none
+            }.disposed(by: bag)
+        
+        tableView
+            .rx
+            .modelSelected(FoodItem.self)
+            .subscribe(onNext: { _ in
+                addComponent.showSnackBar(withMessage: StringConstant.onProgressMessage, withType: .Ongoing)
+            }).disposed(by: bag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -134,10 +170,7 @@ class FoodItemContainerViewController: UIViewController {
 
 extension FoodItemContainerViewController: PresenterToFoodItemView {
     func updateSegmenteViewAndTableView(with filteredFoodItems: [FoodItem]) {
-        DispatchQueue.main.async {[weak self] in
-            self?.foodItems = filteredFoodItems
-            self?.tableView.reloadData()
-        }
+        rxFoodItems.accept(filteredFoodItems)
     }
     
     func update(with error: String) {
@@ -161,18 +194,14 @@ extension FoodItemContainerViewController {
     private func configureTablviewInitialization(){
         view.addSubview(tableView)
         tableView.backgroundColor = nil
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.separatorStyle = .none
-        
+        tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
-        tableView.keyboardDismissMode = .interactive
-        
         tableView.snp.makeConstraints{ make in
             make.top.equalToSuperview().offset(TablviewConstraintConstant.topOffset)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.leading.equalToSuperview().offset(TablviewConstraintConstant.leadingOffset)
-            make.trailing.equalToSuperview().inset(TablviewConstraintConstant.traillingInset)
         }
         
         leftSwipe.direction = .left
@@ -238,36 +267,7 @@ extension FoodItemContainerViewController {
 
 extension FoodItemContainerViewController {
     func updateView(with data: [FoodItem]) {
-        foodItems = data
         presenter?.fetchFoodItemsData(for: .Pizza, withOriginalFoodItems: data)
-    }
-}
-
-
-// MARK:- Tableview delegate implementation
-
-extension FoodItemContainerViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        foodItems.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodItemContainerTableViewCell.identifier, for: indexPath) as? FoodItemContainerTableViewCell else {
-            return UITableViewCell()
-        }
-        
-        let item = foodItems[indexPath.row]
-        cell.configure(with: item.info, withImageUrl: item.imgUrl, withItemId: item.id)
-        cell.contentView.backgroundColor = .white
-        cell.delegate = self
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        addComponent.showSnackBar(withMessage: StringConstant.onProgressMessage, withType: .Ongoing)
     }
 }
 
