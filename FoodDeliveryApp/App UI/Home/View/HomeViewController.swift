@@ -14,7 +14,17 @@ class HomeViewController: UIViewController {
     
     var presenter: HomeViewToPresenter?
     var imageResourceNames = [String]()
-    
+    struct PageControlConstraintConstant {
+        static let initialCenterXInset = 100
+        static let initialCenterYOffset = 0
+        static let height = 200
+        static let width = 200
+        static let updatedCenterYOffset = HomeViewController().view.frame.height/4+100
+    }
+    private struct ScrollViewConstaraintConstant {
+        static let initialBottomInset = 250
+        static let updatedBottomInset = 100
+    }
     private var timer: Timer?
     private var fpc = FloatingPanelController()
     
@@ -81,6 +91,7 @@ class HomeViewController: UIViewController {
 // MARK:-  Views Item Configuration implementation
 
 extension HomeViewController {
+    
     private func configureScrollView() {
         view.addSubview(scrollView)
         scrollView.delegate = self
@@ -90,9 +101,10 @@ extension HomeViewController {
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().inset(250)
+            make.bottom.equalToSuperview().inset(ScrollViewConstaraintConstant.initialBottomInset)
         }
     }
+    
     private func configureUIScorllViewWithImageView(_ isHidden: Bool = true) {
         
         scrollView.isHidden = isHidden
@@ -117,10 +129,10 @@ extension HomeViewController {
         self.view.addSubview(pageControl)
         pageControl.snp.makeConstraints{
             make in
-            make.centerX.equalToSuperview().inset(100)
-            make.centerY.equalToSuperview().offset(100)
-            make.height.equalTo(200)
-            make.width.equalTo(200)
+            make.centerX.equalToSuperview().inset(PageControlConstraintConstant.initialCenterXInset)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(PageControlConstraintConstant.height)
+            make.width.equalTo(PageControlConstraintConstant.width)
         }
     }
 }
@@ -174,19 +186,24 @@ extension HomeViewController: UIScrollViewDelegate {
 // MARK:- Floating Bottom Panel Delegate implementation
 
 extension HomeViewController: FloatingPanelControllerDelegate {
-    
-    func floatingPanelWillBeginDragging(_ fpc: FloatingPanelController) {
-        if fpc.state == .tip {
-            pageControl.isHidden = false
-        } else {
-            pageControl.isHidden = true
-        }
-    }
     func floatingPanelDidChangePosition(_ fpc: FloatingPanelController) {
-        if fpc.state == .tip {
-            pageControl.isHidden = false
-        } else {
-            pageControl.isHidden = true
-        }
+        let pageControllCenterYOffset = fpc.state == .tip ? Int(PageControlConstraintConstant.updatedCenterYOffset) : PageControlConstraintConstant.initialCenterYOffset
+        
+        let scrollviewBottomInset = fpc.state == .tip ? ScrollViewConstaraintConstant.updatedBottomInset : ScrollViewConstaraintConstant.initialBottomInset
+        UIView.animate(withDuration: 0.5 ,animations: {[weak self] in
+            self?.pageControl.snp.updateConstraints{
+                update in
+                update.centerY.equalToSuperview().offset(pageControllCenterYOffset)
+            }
+            self?.scrollView.snp.updateConstraints{
+                update in
+                update.bottom.equalToSuperview().inset(scrollviewBottomInset)
+            }
+            
+            self?.pageControl.layoutIfNeeded()
+            self?.scrollView.setNeedsLayout()
+            self?.scrollView.layoutIfNeeded()
+        })
+        
     }
 }
