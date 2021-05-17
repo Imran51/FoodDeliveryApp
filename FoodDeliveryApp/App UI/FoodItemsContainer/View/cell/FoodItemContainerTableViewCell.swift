@@ -21,6 +21,31 @@ class FoodItemContainerTableViewCell: UITableViewCell {
     private var priceButtonTapCounter = 0
     private var itemId: Int?
     
+    struct ParentStackviewConstraintConstant {
+        static let topInset = 10
+        static let bottomInset = 10
+        static let leadingInset = 32
+        static let trailingInset = 32
+        static let lowPriority = 999
+    }
+    
+    struct ContainerViewConstraintConstant {
+        static let lowPriority = 999
+    }
+    
+    struct TitleImageConstraintConstant {
+        static let height = 200
+    }
+    
+    struct RightSidePriceButtonConstraintConstant {
+        static let height = 50
+        static let width = 100
+    }
+    
+    struct EmptyStackViewConstraintConstantConstant {
+        static let height = 10
+    }
+    
     private let titleImageView: UIImageView = {
         let image = CustomImageView()
         
@@ -149,42 +174,67 @@ class FoodItemContainerTableViewCell: UITableViewCell {
     private func setUpConstaints(){
         parentStackview.snp.makeConstraints{
             make in
-            make.top.equalToSuperview().inset(8)
-            make.bottom.equalToSuperview().inset(8).priority(999)
-            make.leading.equalToSuperview().inset(8)
-            make.trailing.equalToSuperview().inset(8).priority(999)
+            make.top
+                .equalToSuperview()
+                .inset(ParentStackviewConstraintConstant.topInset)
+            make.bottom
+                .equalToSuperview()
+                .inset(ParentStackviewConstraintConstant.bottomInset)
+                .priority(ParentStackviewConstraintConstant.lowPriority)
+            make.leading
+                .equalToSuperview()
+                .inset(ParentStackviewConstraintConstant.leadingInset)
+            make.trailing
+                .equalToSuperview()
+                .inset(ParentStackviewConstraintConstant.trailingInset)
+                .priority(ParentStackviewConstraintConstant.lowPriority)
         }
         
         containerView.snp.makeConstraints{
             make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview().priority(999)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview().priority(999)
+            make.top
+                .equalToSuperview()
+            make.bottom
+                .equalToSuperview()
+                .priority(ContainerViewConstraintConstant.lowPriority)
+            make.leading
+                .equalToSuperview()
+            make.trailing
+                .equalToSuperview()
+                .priority(ContainerViewConstraintConstant.lowPriority)
         }
         
         containerStackView.snp.makeConstraints{
             make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview().priority(999)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview().priority(999)
+            make.top
+                .equalToSuperview()
+            make.bottom
+                .equalToSuperview()
+                .priority(ContainerViewConstraintConstant.lowPriority)
+            make.leading
+                .equalToSuperview()
+            make.trailing
+                .equalToSuperview()
+                .priority(ContainerViewConstraintConstant.lowPriority)
         }
         
         titleImageView.snp.makeConstraints{
             make in
-            make.height.equalTo(200)
+            make.height
+                .equalTo(TitleImageConstraintConstant.height)
         }
         
         rightSidePriceButton.snp.makeConstraints{
             make in
-            make.height.equalTo(50)
-            make.width.equalTo(100)
+            make.height
+                .equalTo(RightSidePriceButtonConstraintConstant.height)
+            make.width
+                .equalTo(RightSidePriceButtonConstraintConstant.width)
         }
         
         emptyFixedheightStackview.snp.makeConstraints{
             make in
-            make.height.equalTo(10)
+            make.height.equalTo(EmptyStackViewConstraintConstantConstant.height)
         }
         
         subContainerStackView.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
@@ -219,6 +269,7 @@ class FoodItemContainerTableViewCell: UITableViewCell {
     }
 }
 
+// MARK:- RightSideButton Click Action Implementation
 
 extension FoodItemContainerTableViewCell {
     @objc private func priceButtonTapped(_ sender: UIButton){
